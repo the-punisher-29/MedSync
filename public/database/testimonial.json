@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "username": "Aarav Sharma",
+    "image": "../assets/testimonial/1.jpg",
+    "rating": "4",
+    "review": "I've been using this service for a few months, and it has been a lifesaver. Getting medicines delivered directly to my hostel is so convenient, especially during busy times. The delivery is always timely, and I’ve never had any issues with stock."
+  },
+  {
+    "id": 2,
+    "username": "Priya Patel",
+    "image": "../assets/testimonial/2.jpg",
+    "rating": "5",
+    "review": "Excellent service! The process is seamless, and the medicine selection is great. I was able to find everything I needed, and the delivery was quick. Highly recommend for anyone on campus looking for an easy way to get their prescriptions."
+  },
+  {
+    "id": 3,
+    "username": "Vikram Singh",
+    "image": "../assets/testimonial/3.jpg",
+    "rating": "4.5",
+    "review": "Great initiative by the health center. This platform has made it much easier to access essential medicines without the hassle of physically going to the pharmacy. The prices are fair, and the quality is reliable."
+  },
+  {
+    "id": 4,
+    "username": "Sneha Desai",
+    "image": "../assets/testimonial/4.jpg",
+    "rating": "5",
+    "review": "Absolutely love this service! It’s very convenient for faculty and staff. The medicines are always delivered on time, and the customer support is very responsive if you have any queries."
+  },
+  {
+    "id": 5,
+    "username": "Rahul Kumar",
+    "image": "../assets/testimonial/5.jpg",
+    "rating": "3.5",
+    "review": "The service is decent, but there have been a few times when the stock was low on certain medicines I needed. However, the convenience of doorstep delivery to my hostel is fantastic, and it saves a lot of time."
+  },
+  {
+    "id": 6,
+    "username": "Aishwarya Iyer",
+    "image": "../assets/testimonial/6.jpg",
+    "rating": "4",
+    "review": "This platform is a huge time-saver! I can easily browse and order medicines from my hostel room. Delivery is fast, and I appreciate the attention to quality. I just wish they had more payment options available."
+  }
+]

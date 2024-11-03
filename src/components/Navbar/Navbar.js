@@ -33,9 +33,9 @@ const Navbar = () => {
     window.addEventListener('scroll', onChangeHeader)
 
     return (
-        <header className={changeHeader ? "bg-white fixed z-50 top-0 left-0 w-full shadow-md transition duration-500" : "bg-transparent fixed z-50 top-0 left-0 w-full transition duration-500"}>
+        <header className={changeHeader ? "bg-white fixed z-50 top-0 left-0 w-full shadow-md transition duration-500" : "bg-transparent fixed z-50 top-0 left-0 w-full transition duration-500" } style={{ backgroundColor: '#98F5F9' }}>
             {/* desktop nav  */}
-            <nav className="flex items-center max-w-screen-xl mx-auto px-6 py-3">
+            <nav className="flex items-center max-w-screen-xl mx-auto px-6 py-3" >
                 {/* brand  */}
                 <div className="flex flex-grow">
                     <NavBrand />

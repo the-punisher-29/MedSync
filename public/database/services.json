@@ -1,47 +1,41 @@
 [
   {
     "id": 1,
-    "title": "Pharmacy Help Line",
-    "description": "Do you need answers to questions about prescription drugs? We’re here 24 hours a day, every day.Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga quisquam ducimus quia! Et excepturi ut voluptatem. Fugit, perferendis expedita dolorum non veritatis repudiandae minima recusandae maxime corrupti a sunt dicta accusamus exercitationem molestias totam, et voluptatem laboriosam ducimus quis dignissimos, accusantium in. Corrupti, aperiam! Hic facilis inventore quaerat consectetur praesentium eius, itaque, tempora laborum, perferendis eos enim qui dolore quisquam libero porro vero quasi? Quam quia laborum earum quisquam cum officiis, dicta voluptate perspiciatis dolores molestiae eum maxime aliquid iste sunt hic, facilis recusandae ducimus. Neque similique, vero ea possimus eos totam aliquid repudiandae eum enim quasi harum, corporis sequi!",
+    "title": "24/7 Pharmacy Help Line",
+    "description": "Need assistance with prescription medications? Our pharmacy help line is available 24 hours a day to answer your questions about medications, refills, and more. Whether you have queries about dosages or side effects, we’re here to help you navigate your pharmaceutical needs.",
     "icon": "../assets/services/005-hot-line.png",
     "image": "../assets/services/image/service-1.jpg",
     "contactno": "1-800-238-6279",
-    "email": "phamipharma@gmail.com",
-    "facebook": "https://www.facebook.com",
-    "instagram": "https://www.instagram.com"
+    "email": "iitpharmacy@iitj.ac.in",
+    "facebook": "https://www.facebook.com/IITJPharmacy",
+    "instagram": "https://www.instagram.com/IITJPharmacy"
   },
   {
     "id": 2,
-    "title": "Prescribing Tools",
-    "description": "Search our formulary list of preferred drugs. Find a pharmacy clinical policy bulletin, or search our preferred drug lists. Or find out more about e-prescribing.Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga quisquam ducimus quia! Et excepturi ut voluptatem. Fugit, perferendis expedita dolorum non veritatis repudiandae minima recusandae maxime corrupti a sunt dicta accusamus exercitationem molestias totam, et voluptatem laboriosam ducimus quis dignissimos, accusantium in. Corrupti, aperiam! Hic facilis inventore quaerat consectetur praesentium eius, itaque, tempora laborum, perferendis eos enim qui dolore quisquam libero porro vero quasi? Quam quia laborum earum quisquam cum officiis, dicta voluptate perspiciatis dolores molestiae eum maxime aliquid iste sunt hic, facilis recusandae ducimus. Neque similique, vero ea possimus eos totam aliquid repudiandae eum enim quasi harum, corporis sequi!",
+    "title": "Medication Management Tools",
+    "description": "Access our comprehensive formulary list of medications and clinical policies to help you make informed decisions about your prescriptions. Our e-prescribing platform allows for seamless medication ordering and tracking, ensuring you receive your medications promptly and safely.",
     "icon": "../assets/services/004-tools.png",
     "image": "../assets/services/image/service-2.jpg"
   },
   {
     "id": 3,
     "title": "Specialty Medications",
-    "description": "Some patients require specialty drugs for chronic or complex conditions. The network specialty pharmacy can dispense these drugs quickly and at a reasonable cost..Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga quisquam ducimus quia! Et excepturi ut voluptatem. Fugit, perferendis expedita dolorum non veritatis repudiandae minima recusandae maxime corrupti a sunt dicta accusamus exercitationem molestias totam, et voluptatem laboriosam ducimus quis dignissimos, accusantium in. Corrupti, aperiam! Hic facilis inventore quaerat consectetur praesentium eius, itaque, tempora laborum, perferendis eos enim qui dolore quisquam libero porro vero quasi? Quam quia laborum earum quisquam cum officiis, dicta voluptate perspiciatis dolores molestiae eum maxime aliquid iste sunt hic, facilis recusandae ducimus. Neque similique, vero ea possimus eos totam aliquid repudiandae eum enim quasi harum, corporis sequi!",
+    "description": "For students with chronic or complex conditions, we offer specialty medications tailored to meet your health needs. Our pharmacy collaborates with healthcare providers to ensure quick dispensing of these critical drugs at affordable prices.",
     "icon": "../assets/services/006-medical-care.png",
     "image": "../assets/services/image/service-3.jpg"
   },
   {
     "id": 4,
-    "title": "Pharmacy Claims",
-    "description": "Search our formulary list of preferred drugs. Find a pharmacy clinical policy bulletin, or search our preferred drug lists. Or find out more about e-prescribing.Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga quisquam ducimus quia! Et excepturi ut voluptatem. Fugit, perferendis expedita dolorum non veritatis repudiandae minima recusandae maxime corrupti a sunt dicta accusamus exercitationem molestias totam, et voluptatem laboriosam ducimus quis dignissimos, accusantium in. Corrupti, aperiam! Hic facilis inventore quaerat consectetur praesentium eius, itaque, tempora laborum, perferendis eos enim qui dolore quisquam libero porro vero quasi? Quam quia laborum earum quisquam cum officiis, dicta voluptate perspiciatis dolores molestiae eum maxime aliquid iste sunt hic, facilis recusandae ducimus. Neque similique, vero ea possimus eos totam aliquid repudiandae eum enim quasi harum, corporis sequi!",
+    "title": "Pharmacy Claims Assistance",
+    "description": "Our pharmacy team can assist you with claims related to your medication costs. We help you navigate the insurance process, ensuring you receive the maximum benefits available under your health plan.",
     "icon": "../assets/services/002-medicine.png",
     "image": "../assets/services/image/service-4.jpg"
   },
+  
   {
     "id": 5,
-    "title": "Log in to our provider portal",
-    "description": "The provider portal has information and tools to complete real-time transactions along with administrative and financial tools. You can: ipsum dolor sit amet consectetur adipisicing elit. Fuga quisquam ducimus quia! Et excepturi ut voluptatem. Fugit, perferendis expedita dolorum non veritatis repudiandae minima recusandae maxime corrupti a sunt dicta accusamus exercitationem molestias totam, et voluptatem laboriosam ducimus quis dignissimos, accusantium in. Corrupti, aperiam! Hic facilis inventore quaerat consectetur praesentium eius, itaque, tempora laborum, perferendis eos enim qui dolore quisquam libero porro vero quasi? Quam quia laborum earum quisquam cum officiis, dicta voluptate perspiciatis dolores molestiae eum maxime aliquid iste sunt hic, facilis recusandae ducimus. Neque similique, vero ea possimus eos totam aliquid repudiandae eum enim quasi harum, corporis sequi!",
-    "icon": "../assets/services/001-portal.png",
-    "image": "../assets/services/image/service-5.jpg"
-  },
-  {
-    "id": 6,
-    "title": "Our URAC pharmacy accreditations",
-    "description": "URAC is an independent, non-profit health care accrediting organization dedicated to promoting health care quality through accreditation, education, and measurement.Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga quisquam ducimus quia! Et excepturi ut voluptatem. Fugit, perferendis expedita dolorum non veritatis repudiandae minima recusandae maxime corrupti a sunt dicta accusamus exercitationem molestias totam, et voluptatem laboriosam ducimus quis dignissimos, accusantium in. Corrupti, aperiam! Hic facilis inventore quaerat consectetur praesentium eius, itaque, tempora laborum, perferendis eos enim qui dolore quisquam libero porro vero quasi? Quam quia laborum earum quisquam cum officiis, dicta voluptate perspiciatis dolores molestiae eum maxime aliquid iste sunt hic, facilis recusandae ducimus. Neque similique, vero ea possimus eos totam aliquid repudiandae eum enim quasi harum, corporis sequi! ",
+    "title": "Quality Assurance",
+    "description": "Our pharmacy is accredited by URAC, ensuring high standards of quality in healthcare delivery. We are committed to promoting health care quality through accreditation, education, and continuous measurement to improve our services.",
     "icon": "../assets/services/007-injection.png",
     "image": "../assets/services/image/service-6.jpg"
   }

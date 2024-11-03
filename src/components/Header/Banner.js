@@ -15,8 +15,8 @@ const Banner = () => {
                             <img className="w-24" src="../../../assets/banner/medal.png" alt="banner" />
     
                             <h1 className="poppins text-gray-700 font-semibold text-4xl lg:text-5xl leading-relaxed">
-                                Best Quality <br />
-                                <span className="text-6xl text-blue-700">Medicine in 2024</span>
+                                Get Best Quality <br />
+                                <span className="text-6xl text-blue-700">Medicines</span>
                             </h1>
     
                             <p className="text-gray-500 font-normal text-md mt-4 leading-7">

@@ -1,5 +1,9 @@
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { collection, addDoc } from "firebase/firestore";
 
+// Firebase configuration
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
     authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -10,8 +14,16 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const initializeAuthentication = () => {
-    return initializeApp(firebaseConfig)
-}
+const app = initializeApp(firebaseConfig);
 
+// Function to initialize Authentication
+const initializeAuthentication = () => {
+    return getAuth(app);
+};
+
+// Initialize Firestore and Authentication
+const db = getFirestore(app);
+const auth = initializeAuthentication();
+
+export { db, auth, collection, addDoc };
 export default initializeAuthentication;

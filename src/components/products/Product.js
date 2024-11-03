@@ -22,7 +22,7 @@ const Product = (props) => {
             <p className="text-gray-500 text-center flex-grow">{description.slice(0, 70)}</p>
 
             {/* price  */}
-            <h2 className="text-gray-900 text-center font-bold poppins text-3xl">${price}</h2>
+            <h2 className="text-gray-900 text-center font-bold poppins text-3xl">Rs {price}</h2>
             {/* rating  */}
             <div className="flex items-center space-x-2">
                 <Rating

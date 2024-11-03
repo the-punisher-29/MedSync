@@ -19,7 +19,7 @@ const Banner = () => {
                                 <span className="text-6xl text-blue-700">Medicine in 2024</span>
                             </h1>
     
-                            <p className="text-gray-500 font-light text-base">
+                            <p className="text-gray-500 font-normal text-md mt-4 leading-7">
                                 Welcome to PHC's Pharmacy Online Portal. <br />
                                 Get medicines delivered right to your doorstep, whether you're a student in the hostels or a faculty/staff member in the quarters.
                             </p>
@@ -29,7 +29,7 @@ const Banner = () => {
                                 No need to visit the health center physically—simply place your order online, and we'll handle the rest.
                             </p>
     
-                            <p className="text-gray-500 font-light text-sm mt-2">
+                            <p className="text-gray-500 font-normal text-md mt-4 leading-7">
                                 With secure, contactless delivery options, we ensure that students, faculty, and staff can access the medications they need promptly and conveniently. 
                                 Experience efficient and reliable healthcare support, tailored to meet the demands of our campus community.
                             </p>

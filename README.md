@@ -7,7 +7,7 @@ MedSync is a web application that provides a seamless experience for users to ma
 To run the project locally, follow these steps:
 
 ### Prerequisites
-
+A
 - **Node Version Manager (NVM)**: Make sure you have NVM installed on your machine. NVM allows you to easily manage multiple versions of Node.js.
   
 - **Reason for Downgrading Node.js**: Due to compatibility issues with certain packages in the MedSync project, it is necessary to downgrade Node.js to version 16. Using this version ensures that all dependencies function correctly, particularly those that may not be fully compatible with later versions of Node.js. This step is crucial to avoid errors during installation and runtime, especially related to the `cracko` package and other dependencies that may have known issues with newer Node versions.
@@ -19,42 +19,46 @@ To run the project locally, follow these steps:
    ```bash
    git clone https://github.com/your-username/MedSync.git
    cd MedSync
-Delete the node_modules Folder If you've previously installed dependencies, it's a good idea to start fresh:
+   ```
 
-bash
-Copy code
-rm -rf node_modules
-Downgrade Node Version Use NVM to switch to Node.js version 16:
+2.**Delete the node_modules Folder If you've previously installed dependencies, it's a good idea to start fresh:**
+   ```bash
+   rm -rf node_modules
+   ```
 
-bash
-Copy code
-nvm install 16
-nvm use 16
-Install Dependencies Run the following command to install the required packages:
+3.**Downgrade Node Version Use NVM to switch to Node.js version 16:**
+   ```bash
+   nvm install 16
+   nvm use 16
+   ```
 
-bash
-Copy code
+4.**Install Dependencies Run the following command to install the required packages:**
+
+```bash
 npm install
-Start the Development Server Now you can start the application with:
+```
 
-bash
-Copy code
+5.**Start the Development Server Now you can start the application with:**
+
+```bash
 npm start
-Open the Application Once the server is running, open your browser and go to http://localhost:3000 to view the application.
+```
+
+6.**Open the Application Once the server is running, open your browser and go to http://localhost:3000 to view the application.**
 
 
-Features
+###Features
 
-User authentication with Google sign-in
-Product listings from Firestore
-Responsive design using Chakra UI
-Ability to register for events
+-User authentication with Google sign-in
+-Product listings from Firestore
+-Responsive design using Chakra UI
+-Ability to register for events
 
-Technologies Used
-React
-Firebase (Firestore for database)
-Chakra UI
-React Reveal for animations
+###Technologies Used
+-React
+-Firebase (Firestore for database)
+-Chakra UI
+-React Reveal for animations
 
-Troubleshooting
-If you encounter any issues related to package versions or dependencies, ensure that you have followed the steps carefully, especially downgrading the Node.js version to 16.
+###Troubleshooting
+-If you encounter any issues related to package versions or dependencies, ensure that you have followed the steps carefully, especially downgrading the Node.js version to 16.

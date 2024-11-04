@@ -33,32 +33,32 @@ A
    ```
 
 4.**Install Dependencies Run the following command to install the required packages:**
+   ```bash
+   npm install
+   ```
 
-```bash
-npm install
-```
 
 5.**Start the Development Server Now you can start the application with:**
-
-```bash
-npm start
-```
+   
+  ```bash
+  npm start
+  ```
 
 6.**Open the Application Once the server is running, open your browser and go to http://localhost:3000 to view the application.**
 
 
-###Features
+### Features
 
--User authentication with Google sign-in
--Product listings from Firestore
--Responsive design using Chakra UI
--Ability to register for events
+- User authentication with Google sign-in
+- Product listings from Firestore
+- Responsive design using Chakra UI
+- Ability to register for events
 
-###Technologies Used
--React
--Firebase (Firestore for database)
--Chakra UI
--React Reveal for animations
+### Technologies Used
+- React
+- Firebase (Firestore for database)
+- Chakra UI
+- React Reveal for animations
 
-###Troubleshooting
--If you encounter any issues related to package versions or dependencies, ensure that you have followed the steps carefully, especially downgrading the Node.js version to 16.
+### Troubleshooting
+- If you encounter any issues related to package versions or dependencies, ensure that you have followed the steps carefully, especially downgrading the Node.js version to 16.

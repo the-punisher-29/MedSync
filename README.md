@@ -1,4 +1,4 @@
-# MedSync Project
+# MedSync
 
 MedSync is a web application that provides a seamless experience for users to manage their medical needs, including product listings, services, and user authentication.
 
@@ -7,7 +7,6 @@ MedSync is a web application that provides a seamless experience for users to ma
 To run the project locally, follow these steps:
 
 ### Prerequisites
-A
 - **Node Version Manager (NVM)**: Make sure you have NVM installed on your machine. NVM allows you to easily manage multiple versions of Node.js.
   
 - **Reason for Downgrading Node.js**: Due to compatibility issues with certain packages in the MedSync project, it is necessary to downgrade Node.js to version 16. Using this version ensures that all dependencies function correctly, particularly those that may not be fully compatible with later versions of Node.js. This step is crucial to avoid errors during installation and runtime, especially related to the `cracko` package and other dependencies that may have known issues with newer Node versions.

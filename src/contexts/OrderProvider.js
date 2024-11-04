@@ -1,39 +1,41 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 export const OrderContext = createContext();
 
-const OrderProvider = ({children}) => {
+export const OrderProvider = ({ children }) => {
     const [orders, setOrders] = useState([]);
 
-    //handle cart 
-    const handleCart = (products) => {
-        setOrders(prev => {
-            return [
-                ...prev,
-                products
-            ]
-        });
-    }
+    // Function to add product to the cart
+    const handleCart = (product) => {
+        const existingProduct = orders.find((item) => item.id === product.id);
+        if (existingProduct) {
+            // Increment quantity if product already in cart
+            updateProductQuantity(product.id, existingProduct.quantity + 1);
+        } else {
+            // Add product with quantity 1 if not in cart
+            setOrders([...orders, { ...product, quantity: 1 }]);
+        }
+    };
 
-    //remove product
-    const removeProduct = (id) => {
-        setOrders((prev) => {
-            return prev.filter(item => {
-                return item.id !== id
-            })
-        })
-    }
+    // Function to update product quantity
+    const updateProductQuantity = (productId, newQuantity) => {
+        setOrders((prevOrders) =>
+            prevOrders.map((item) =>
+                item.id === productId ? { ...item, quantity: newQuantity } : item
+            )
+        );
+    };
 
-    const value = {
-        orders, 
-        handleCart,
-        removeProduct
-    }
+    // Function to remove a product from the cart
+    const removeProduct = (productId) => {
+        setOrders((prevOrders) => prevOrders.filter((item) => item.id !== productId));
+    };
+
     return (
-        <OrderContext.Provider value={value}>
+        <OrderContext.Provider value={{ orders, handleCart, updateProductQuantity, removeProduct }}>
             {children}
         </OrderContext.Provider>
-    )
-}
+    );
+};
 
 export default OrderProvider

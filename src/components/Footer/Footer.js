@@ -6,17 +6,15 @@ const Footer = () => {
 
     const footerLink = [
         { id: 1, text: 'Monday to Sunday' },
-        { id: 2, text: '24 hours open' },
+        { id: 2, text: 'Open 24 hours' },
         { id: 3, text: 'IITJ Medical Centre' },
         { id: 4, text: 'IIT Jodhpur,Karwar' },
         { id: 5, text: 'Pharmacy Help Line' },
         { id: 6, text: 'Prescribing Tools' },
         { id: 7, text: 'Speciality Medications' },
         { id: 8, text: 'Pharmacy Claims' },
-        { id: 9, text: 'Email - ' },
-        { id: 10, text: 'phc@iitj.ac.in' },
-        { id: 11, text: 'Telephone - ' },
-        { id: 12, text: '0291-280-(1184)' }
+        { id: 9, text: 'Email - phc@iitj.ac.in' },
+        { id: 11, text: 'Call - 0291-280-(1184)' }
     ]
     return (
         <Fade left>
@@ -32,7 +30,10 @@ const Footer = () => {
                             {/* list  */}
                             {
                                 footerLink.slice(0, 4).map(item => (
-                                    <a href="https://github.com/the-punisher-29" target="_blank" rel="noopener noreferrer" key={item.id} className="text-sm hover:underline">{item.text}</a>
+                                    <span key={item.id} className="text-sm">
+    {item.text}
+</span>
+
                                 ))
                             }
                         </nav>
@@ -43,7 +44,7 @@ const Footer = () => {
                             {/* list  */}
                             {
                                 footerLink.slice(4, 8).map(item => (
-                                    <a href="https://github.com/the-punisher-29" target="_blank" rel="noopener noreferrer" key={item.id} className="text-sm hover:underline">{item.text}</a>
+                                    <a  target="_blank" rel="noopener noreferrer" key={item.id} className="text-sm hover:underline">{item.text}</a>
                                 ))
                             }
                         </nav>
@@ -54,7 +55,10 @@ const Footer = () => {
                             {/* list  */}
                             {
                                 footerLink.slice(8, 12).map(item => (
-                                    <a href="https://github.com/the-punisher-29" target="_blank" rel="noopener noreferrer" key={item.id} className="text-sm hover:underline">{item.text}</a>
+                                    <span key={item.id} className="text-sm">
+    {item.text}
+</span>
+
                                 ))
                             }
                         </nav>

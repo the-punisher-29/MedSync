@@ -16,7 +16,7 @@ To run the project locally, follow these steps:
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/MedSync.git
+   git clone https://github.com/the-punisher-29/MedSync.git
    cd MedSync
    ```
 

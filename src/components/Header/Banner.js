@@ -20,7 +20,7 @@ const Banner = () => {
                             </h1>
     
                             <p className="text-gray-500 font-normal text-md mt-4 leading-7">
-                                Welcome to PHC's Pharmacy Online Portal. <br />
+                                Welcome to PHC Pharmacy's Online Portal. <br />
                                 Get medicines delivered right to your doorstep, whether you're a student in the hostels or a faculty/staff member in the quarters.
                             </p>
     

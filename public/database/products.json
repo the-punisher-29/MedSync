@@ -1,272 +1,651 @@
-[
-  {
-    "id": 1,
-    "title": "Cetirizine 45mg Film-coated",
-    "description": "Used to treat allergies and cold symptoms.",
-    "price": 25.0,
-    "image": "../assets/products/product1.jpg",
-    "reviews": 3,
-    "rating": 4
-  },
-  {
-    "id": 2,
-    "title": "Ibuprofen 500mg Capsule",
-    "description": "Relieves pain, headache, menstrual cramps, and muscle aches.",
-    "price": 32.0,
-    "image": "../assets/products/product2.jpg",
-    "reviews": 20,
-    "rating": 5
-  },
-  {
-    "id": 3,
-    "title": "Paracetamol Syrup 125mg/5ml",
-    "description": "Used for fever and mild pain relief.",
-    "price": 35.0,
-    "image": "../assets/products/product9.jpg",
-    "reviews": 45,
-    "rating": 5
-  },
-  {
-    "id": 4,
-    "title": "Benadryl Cough Syrup",
-    "description": "Provides relief for cough, cold, and throat irritation.",
-    "price": 55.0,
-    "image": "../assets/products/product10.jpg",
-    "reviews": 60,
-    "rating": 4
-  },
-  {
-    "id": 5,
-    "title": "ORS Powder Sachet",
-    "description": "Treats dehydration caused by diarrhea.",
-    "price": 10.0,
-    "image": "../assets/products/product11.jpg",
-    "reviews": 150,
-    "rating": 5
-  },
-  {
-    "id": 6,
-    "title": "Crocin Pain Relief 650mg",
-    "description": "Reduces fever and relieves pain.",
-    "price": 30.0,
-    "image": "../assets/products/product12.jpg",
-    "reviews": 120,
-    "rating": 4
-  },
-  {
-    "id": 7,
-    "title": "Hand Sanitizer 100ml",
-    "description": "Alcohol-based sanitizer for germ protection.",
-    "price": 45.0,
-    "image": "../assets/products/product13.jpg",
-    "reviews": 90,
-    "rating": 5
-  },
-  {
-    "id": 8,
-    "title": "D Cold Total Tablet",
-    "description": "For nasal and sinus congestion, cold, and fever relief.",
-    "price": 18.0,
-    "image": "../assets/products/product14.jpg",
-    "reviews": 40,
-    "rating": 4
-  },
-  {
-    "id": 9,
-    "title": "Dabur Chyawanprash 500g",
-    "description": "Immunity-boosting Ayurvedic health supplement.",
-    "price": 160.0,
-    "image": "../assets/products/product15.jpg",
-    "reviews": 200,
-    "rating": 4
-  },
-  {
-    "id": 10,
-    "title": "Dettol Antiseptic Liquid 200ml",
-    "description": "Antiseptic for wound care and personal hygiene.",
-    "price": 72.0,
-    "image": "../assets/products/product16.jpg",
-    "reviews": 300,
-    "rating": 5
-  },
-  {
-    "id": 11,
-    "title": "Becosules Capsules",
-    "description": "Vitamin B-complex supplement for immune support.",
-    "price": 35.0,
-    "image": "../assets/products/product17.jpg",
-    "reviews": 130,
-    "rating": 4
-  },
-  {
-    "id": 12,
-    "title": "Zincovit Syrup 200ml",
-    "description": "Multivitamin and mineral syrup for immunity.",
-    "price": 110.0,
-    "image": "../assets/products/product18.jpg",
-    "reviews": 70,
-    "rating": 4
-  },
-  {
-    "id": 13,
-    "title": "Disprin Tablets",
-    "description": "Pain relief and fever reduction tablet.",
-    "price": 10.0,
-    "image": "../assets/products/product19.jpg",
-    "reviews": 180,
-    "rating": 5
-  },
-  {
-    "id": 14,
-    "title": "Liv 52 Syrup 200ml",
-    "description": "Liver care syrup with Ayurvedic ingredients.",
-    "price": 130.0,
-    "image": "../assets/products/product20.jpg",
-    "reviews": 90,
-    "rating": 4
-  },
-  {
-    "id": 15,
-    "title": "Vicks Vaporub 50g",
-    "description": "Topical ointment for cold and cough relief.",
-    "price": 55.0,
-    "image": "../assets/products/product21.jpg",
-    "reviews": 220,
-    "rating": 5
-  },
-  {
-    "id": 16,
-    "title": "Revital H Capsules",
-    "description": "Multivitamin supplement for energy and stamina.",
-    "price": 150.0,
-    "image": "../assets/products/product22.jpg",
-    "reviews": 80,
-    "rating": 4
-  },
-  {
-    "id": 17,
-    "title": "Savlon Antiseptic Cream 50g",
-    "description": "For minor cuts, wounds, and skin infections.",
-    "price": 40.0,
-    "image": "../assets/products/product23.jpg",
-    "reviews": 70,
-    "rating": 5
-  },
-  {
-    "id": 18,
-    "title": "Eno Fruit Salt Sachet",
-    "description": "Fast relief from acidity and heartburn.",
-    "price": 5.0,
-    "image": "../assets/products/product24.jpg",
-    "reviews": 140,
-    "rating": 5
-  },
-  {
-    "id": 19,
-    "title": "Moov Pain Relief Cream 30g",
-    "description": "Topical cream for muscle pain and backaches.",
-    "price": 55.0,
-    "image": "../assets/products/product25.jpg",
-    "reviews": 115,
-    "rating": 4
-  },
-  {
-    "id": 20,
-    "title": "Himalaya Ashvagandha Tablet",
-    "description": "Herbal supplement for stress relief and stamina.",
-    "price": 200.0,
-    "image": "../assets/products/product26.jpg",
-    "reviews": 50,
-    "rating": 4
-  },
-  {
-    "id": 21,
-    "title": "Glucon-D Original 200g",
-    "description": "Instant energy drink powder for quick rehydration.",
-    "price": 60.0,
-    "image": "../assets/products/product27.jpg",
-    "reviews": 170,
-    "rating": 5
-  },
-  {
-    "id": 22,
-    "title": "Saridon Tablet",
-    "description": "Quick relief from headaches and minor pains.",
-    "price": 15.0,
-    "image": "../assets/products/product28.jpg",
-    "reviews": 100,
-    "rating": 5
-  },
-  {
-    "id": 23,
-    "title": "Cetrilak Antiseptic Solution",
-    "description": "Used for skin disinfection before and after surgery.",
-    "price": 90.0,
-    "image": "../assets/products/product29.jpg",
-    "reviews": 60,
-    "rating": 4
-  },
-  {
-    "id": 24,
-    "title": "Amrutanjan Pain Balm",
-    "description": "Effective for headache, cold, and back pain relief.",
-    "price": 30.0,
-    "image": "../assets/products/product30.jpg",
-    "reviews": 95,
-    "rating": 5
-  },
-  {
-    "id": 25,
-    "title": "Dabur Honitus Cough Syrup",
-    "description": "Ayurvedic cough syrup for soothing relief from cough.",
-    "price": 85.0,
-    "image": "../assets/products/product31.jpg",
-    "reviews": 55,
-    "rating": 4
-  },
-  {
-    "id": 26,
-    "title": "Dabur Red Toothpaste 100g",
-    "description": "Ayurvedic toothpaste for strong and healthy teeth.",
-    "price": 50.0,
-    "image": "../assets/products/product32.jpg",
-    "reviews": 200,
-    "rating": 4
-  },
-  {
-    "id": 27,
-    "title": "Burnol Cream 20g",
-    "description": "Antiseptic cream for burn wounds and cuts.",
-    "price": 45.0,
-    "image": "../assets/products/product33.jpg",
-    "reviews": 30,
-    "rating": 4
-  },
-  {
-    "id": 28,
-    "title": "Betadine Solution 100ml",
-    "description": "Antiseptic for wound cleaning and disinfection.",
-    "price": 100.0,
-    "image": "../assets/products/product34.jpg",
-    "reviews": 130,
-    "rating": 4
-  },
-  {
-    "id": 29,
-    "title": "Combiflam Tablet",
-    "description": "Pain relief and anti-inflammatory tablet.",
-    "price": 20.0,
-    "image": "../assets/products/product35.jpg",
-    "reviews": 110,
-    "rating": 4
-  },
-  {
-    "id": 30,
-    "title": "Electral Powder Sachet",
-    "description": "Rehydration solution for electrolyte balance.",
-    "price": 12.0,
-    "image": "../assets/products/product36.jpg",
-    "reviews": 250,
-    "rating": 5
-  }
-]
+// [
+//   {
+//     "id": 1,
+//     "title": "Cetirizine 45mg Film-coated",
+//     "description": "Used to treat allergies and cold symptoms.",
+//     "price": 25.0,
+//     "image": "../assets/products/product1.jpg",
+//     "reviews": 3,
+//     "rating": 4
+//   },
+//   {
+//     "id": 2,
+//     "title": "Ibuprofen 500mg Capsule",
+//     "description": "Relieves pain, headache, menstrual cramps, and muscle aches.",
+//     "price": 32.0,
+//     "image": "../assets/products/product2.jpg",
+//     "reviews": 20,
+//     "rating": 5
+//   },
+//   {
+//     "id": 3,
+//     "title": "Paracetamol Syrup 125mg/5ml",
+//     "description": "Used for fever and mild pain relief.",
+//     "price": 35.0,
+//     "image": "../assets/products/product9.jpg",
+//     "reviews": 45,
+//     "rating": 5
+//   },
+//   {
+//     "id": 4,
+//     "title": "Benadryl Cough Syrup",
+//     "description": "Provides relief for cough, cold, and throat irritation.",
+//     "price": 55.0,
+//     "image": "../assets/products/product10.jpg",
+//     "reviews": 60,
+//     "rating": 4
+//   },
+//   {
+//     "id": 5,
+//     "title": "ORS Powder Sachet",
+//     "description": "Treats dehydration caused by diarrhea.",
+//     "price": 10.0,
+//     "image": "../assets/products/product11.jpg",
+//     "reviews": 150,
+//     "rating": 5
+//   },
+//   {
+//     "id": 6,
+//     "title": "Crocin Pain Relief 650mg",
+//     "description": "Reduces fever and relieves pain.",
+//     "price": 30.0,
+//     "image": "../assets/products/product12.jpg",
+//     "reviews": 120,
+//     "rating": 4
+//   },
+//   {
+//     "id": 7,
+//     "title": "Hand Sanitizer 100ml",
+//     "description": "Alcohol-based sanitizer for germ protection.",
+//     "price": 45.0,
+//     "image": "../assets/products/product13.jpg",
+//     "reviews": 90,
+//     "rating": 5
+//   },
+//   {
+//     "id": 8,
+//     "title": "D Cold Total Tablet",
+//     "description": "For nasal and sinus congestion, cold, and fever relief.",
+//     "price": 18.0,
+//     "image": "../assets/products/product14.jpg",
+//     "reviews": 40,
+//     "rating": 4
+//   },
+//   {
+//     "id": 9,
+//     "title": "Dabur Chyawanprash 500g",
+//     "description": "Immunity-boosting Ayurvedic health supplement.",
+//     "price": 160.0,
+//     "image": "../assets/products/product15.jpg",
+//     "reviews": 200,
+//     "rating": 4
+//   },
+//   {
+//     "id": 10,
+//     "title": "Dettol Antiseptic Liquid 200ml",
+//     "description": "Antiseptic for wound care and personal hygiene.",
+//     "price": 72.0,
+//     "image": "../assets/products/product16.jpg",
+//     "reviews": 300,
+//     "rating": 5
+//   },
+//   {
+//     "id": 11,
+//     "title": "Becosules Capsules",
+//     "description": "Vitamin B-complex supplement for immune support.",
+//     "price": 35.0,
+//     "image": "../assets/products/product17.jpg",
+//     "reviews": 130,
+//     "rating": 4
+//   },
+//   {
+//     "id": 12,
+//     "title": "Zincovit Syrup 200ml",
+//     "description": "Multivitamin and mineral syrup for immunity.",
+//     "price": 110.0,
+//     "image": "../assets/products/product18.jpg",
+//     "reviews": 70,
+//     "rating": 4
+//   },
+//   {
+//     "id": 13,
+//     "title": "Disprin Tablets",
+//     "description": "Pain relief and fever reduction tablet.",
+//     "price": 10.0,
+//     "image": "../assets/products/product19.jpg",
+//     "reviews": 180,
+//     "rating": 5
+//   },
+//   {
+//     "id": 14,
+//     "title": "Liv 52 Syrup 200ml",
+//     "description": "Liver care syrup with Ayurvedic ingredients.",
+//     "price": 130.0,
+//     "image": "../assets/products/product20.jpg",
+//     "reviews": 90,
+//     "rating": 4
+//   },
+//   {
+//     "id": 15,
+//     "title": "Vicks Vaporub 50g",
+//     "description": "Topical ointment for cold and cough relief.",
+//     "price": 55.0,
+//     "image": "../assets/products/product21.jpg",
+//     "reviews": 220,
+//     "rating": 5
+//   },
+//   {
+//     "id": 16,
+//     "title": "Revital H Capsules",
+//     "description": "Multivitamin supplement for energy and stamina.",
+//     "price": 150.0,
+//     "image": "../assets/products/product22.jpg",
+//     "reviews": 80,
+//     "rating": 4
+//   },
+//   {
+//     "id": 17,
+//     "title": "Savlon Antiseptic Cream 50g",
+//     "description": "For minor cuts, wounds, and skin infections.",
+//     "price": 40.0,
+//     "image": "../assets/products/product23.jpg",
+//     "reviews": 70,
+//     "rating": 5
+//   },
+//   {
+//     "id": 18,
+//     "title": "Eno Fruit Salt Sachet",
+//     "description": "Fast relief from acidity and heartburn.",
+//     "price": 5.0,
+//     "image": "../assets/products/product24.jpg",
+//     "reviews": 140,
+//     "rating": 5
+//   },
+//   {
+//     "id": 19,
+//     "title": "Moov Pain Relief Cream 30g",
+//     "description": "Topical cream for muscle pain and backaches.",
+//     "price": 55.0,
+//     "image": "../assets/products/product25.jpg",
+//     "reviews": 115,
+//     "rating": 4
+//   },
+//   {
+//     "id": 20,
+//     "title": "Himalaya Ashvagandha Tablet",
+//     "description": "Herbal supplement for stress relief and stamina.",
+//     "price": 200.0,
+//     "image": "../assets/products/product26.jpg",
+//     "reviews": 50,
+//     "rating": 4
+//   },
+//   {
+//     "id": 21,
+//     "title": "Glucon-D Original 200g",
+//     "description": "Instant energy drink powder for quick rehydration.",
+//     "price": 60.0,
+//     "image": "../assets/products/product27.jpg",
+//     "reviews": 170,
+//     "rating": 5
+//   },
+//   {
+//     "id": 22,
+//     "title": "Saridon Tablet",
+//     "description": "Quick relief from headaches and minor pains.",
+//     "price": 15.0,
+//     "image": "../assets/products/product28.jpg",
+//     "reviews": 100,
+//     "rating": 5
+//   },
+//   {
+//     "id": 23,
+//     "title": "Cetrilak Antiseptic Solution",
+//     "description": "Used for skin disinfection before and after surgery.",
+//     "price": 90.0,
+//     "image": "../assets/products/product29.jpg",
+//     "reviews": 60,
+//     "rating": 4
+//   },
+//   {
+//     "id": 24,
+//     "title": "Amrutanjan Pain Balm",
+//     "description": "Effective for headache, cold, and back pain relief.",
+//     "price": 30.0,
+//     "image": "../assets/products/product30.jpg",
+//     "reviews": 95,
+//     "rating": 5
+//   },
+//   {
+//     "id": 25,
+//     "title": "Dabur Honitus Cough Syrup",
+//     "description": "Ayurvedic cough syrup for soothing relief from cough.",
+//     "price": 85.0,
+//     "image": "../assets/products/product31.jpg",
+//     "reviews": 55,
+//     "rating": 4
+//   },
+//   {
+//     "id": 26,
+//     "title": "Dabur Red Toothpaste 100g",
+//     "description": "Ayurvedic toothpaste for strong and healthy teeth.",
+//     "price": 50.0,
+//     "image": "../assets/products/product32.jpg",
+//     "reviews": 200,
+//     "rating": 4
+//   },
+//   {
+//     "id": 27,
+//     "title": "Burnol Cream 20g",
+//     "description": "Antiseptic cream for burn wounds and cuts.",
+//     "price": 45.0,
+//     "image": "../assets/products/product33.jpg",
+//     "reviews": 30,
+//     "rating": 4
+//   },
+//   {
+//     "id": 28,
+//     "title": "Betadine Solution 100ml",
+//     "description": "Antiseptic for wound cleaning and disinfection.",
+//     "price": 100.0,
+//     "image": "../assets/products/product34.jpg",
+//     "reviews": 130,
+//     "rating": 4
+//   },
+//   {
+//     "id": 29,
+//     "title": "Combiflam Tablet",
+//     "description": "Pain relief and anti-inflammatory tablet.",
+//     "price": 20.0,
+//     "image": "../assets/products/product35.jpg",
+//     "reviews": 110,
+//     "rating": 4
+//   },
+//   {
+//     "id": 30,
+//     "title": "Electral Powder Sachet",
+//     "description": "Rehydration solution for electrolyte balance.",
+//     "price": 12.0,
+//     "image": "../assets/products/product36.jpg",
+//     "reviews": 250,
+//     "rating": 5
+//   }
+// ]
+
+{
+  "Pain Relief and Analgesics": [
+    {
+      "id": 1,
+      "title": "Cetirizine 45mg Film-coated",
+      "description": "Used to treat allergies and cold symptoms.",
+      "price": 25.0,
+      "image": "../assets/products/product1.jpg",
+      "reviews": 3,
+      "rating": 4
+    },
+    {
+      "id": 2,
+      "title": "Ibuprofen 500mg Capsule",
+      "description": "Relieves pain, headache, menstrual cramps, and muscle aches.",
+      "price": 32.0,
+      "image": "../assets/products/product2.jpg",
+      "reviews": 20,
+      "rating": 5
+    },
+    {
+      "id": 13,
+      "title": "Disprin Tablets",
+      "description": "Pain relief and fever reduction tablet.",
+      "price": 10.0,
+      "image": "../assets/products/product19.jpg",
+      "reviews": 180,
+      "rating": 5
+    },
+    {
+      "id": 24,
+      "title": "Amrutanjan Pain Balm",
+      "description": "Effective for headache, cold, and back pain relief.",
+      "price": 30.0,
+      "image": "../assets/products/product30.jpg",
+      "reviews": 95,
+      "rating": 5
+    },
+    {
+      "id": 29,
+      "title": "Combiflam Tablet",
+      "description": "Pain relief and anti-inflammatory tablet.",
+      "price": 20.0,
+      "image": "../assets/products/product35.jpg",
+      "reviews": 110,
+      "rating": 4
+    },
+    {
+      "id": 31,
+      "title": "Aspirin Tablets 300mg",
+      "description": "Pain relief and anti-inflammatory properties.",
+      "price": 15.0,
+      "image": "../assets/products/product37.jpg",
+      "rating": 4.5,
+      "reviews": 80
+    },
+    {
+      "id": 32,
+      "title": "Diclofenac Gel 20g",
+      "description": "Topical gel for joint and muscle pain.",
+      "price": 35.0,
+      "image": "../assets/products/product38.jpg",
+      "rating": 4,
+      "reviews": 65
+    }
+  ],
+  "Cold, Cough, and Allergy": [
+    {
+      "id": 4,
+      "title": "Benadryl Cough Syrup",
+      "description": "Provides relief for cough, cold, and throat irritation.",
+      "price": 55.0,
+      "image": "../assets/products/product10.jpg",
+      "reviews": 60,
+      "rating": 4
+    },
+    {
+      "id": 8,
+      "title": "D Cold Total Tablet",
+      "description": "For nasal and sinus congestion, cold, and fever relief.",
+      "price": 18.0,
+      "image": "../assets/products/product14.jpg",
+      "reviews": 40,
+      "rating": 4
+    },
+    {
+      "id": 15,
+      "title": "Vicks Vaporub 50g",
+      "description": "Topical ointment for cold and cough relief.",
+      "price": 55.0,
+      "image": "../assets/products/product21.jpg",
+      "reviews": 220,
+      "rating": 5
+    },
+    {
+      "id": 34,
+      "title": "Tulsi Cough Drops 100g",
+      "description": "Herbal cough drops for throat soothing.",
+      "price": 40.0,
+      "image": "../assets/products/product40.jpg",
+      "rating": 4,
+      "reviews": 90
+    },
+    {
+      "id": 35,
+      "title": "Allercet Tablet",
+      "description": "Anti-allergy medicine to relieve sneezing and itchy eyes.",
+      "price": 20.0,
+      "image": "../assets/products/product41.jpg",
+      "rating": 4.5,
+      "reviews": 45
+    }
+  ],
+  "Antiseptics and First Aid": [
+    {
+      "id": 10,
+      "title": "Dettol Antiseptic Liquid 200ml",
+      "description": "Antiseptic for wound care and personal hygiene.",
+      "price": 72.0,
+      "image": "../assets/products/product16.jpg",
+      "reviews": 300,
+      "rating": 5
+    },
+    {
+      "id": 23,
+      "title": "Cetrilak Antiseptic Solution",
+      "description": "Used for skin disinfection before and after surgery.",
+      "price": 90.0,
+      "image": "../assets/products/product29.jpg",
+      "reviews": 60,
+      "rating": 4
+    },
+    {
+      "id": 27,
+      "title": "Burnol Cream 20g",
+      "description": "Antiseptic cream for burn wounds and cuts.",
+      "price": 45.0,
+      "image": "../assets/products/product33.jpg",
+      "reviews": 30,
+      "rating": 4
+    },
+    {
+      "id": 33,
+      "title": "Neosporin Ointment 5g",
+      "description": "Antibiotic ointment for minor cuts and wounds.",
+      "price": 30.0,
+      "image": "../assets/products/product39.jpg",
+      "rating": 4.5,
+      "reviews": 120
+    },
+    {
+      "id": 36,
+      "title": "Hexidine Mouthwash 200ml",
+      "description": "Antiseptic mouthwash for oral hygiene.",
+      "price": 55.0,
+      "image": "../assets/products/product42.jpg",
+      "rating": 4.5,
+      "reviews": 100
+    }
+  ],
+  "Gastrointestinal and Hydration": [
+    {
+      "id": 5,
+      "title": "ORS Powder Sachet",
+      "description": "Treats dehydration caused by diarrhea.",
+      "price": 10.0,
+      "image": "../assets/products/product11.jpg",
+      "reviews": 150,
+      "rating": 5
+    },
+    {
+      "id": 18,
+      "title": "Eno Fruit Salt Sachet",
+      "description": "Fast relief from acidity and heartburn.",
+      "price": 5.0,
+      "image": "../assets/products/product24.jpg",
+      "reviews": 140,
+      "rating": 5
+    },
+    {
+      "id": 30,
+      "title": "Electral Powder Sachet",
+      "description": "Rehydration solution for electrolyte balance.",
+      "price": 12.0,
+      "image": "../assets/products/product36.jpg",
+      "reviews": 250,
+      "rating": 5
+    },
+    {
+      "id": 37,
+      "title": "Pantoprazole Tablets 40mg",
+      "description": "For acid reflux and gastroesophageal issues.",
+      "price": 25.0,
+      "image": "../assets/products/product43.jpg",
+      "rating": 4,
+      "reviews": 75
+    },
+    {
+      "id": 38,
+      "title": "Digene Tablet",
+      "description": "Antacid for indigestion and gas relief.",
+      "price": 15.0,
+      "image": "../assets/products/product44.jpg",
+      "rating": 4.5,
+      "reviews": 100
+    }
+  ],
+  "Vitamins and Supplements": [
+    {
+      "id": 11,
+      "title": "Becosules Capsules",
+      "description": "Vitamin B-complex supplement for immune support.",
+      "price": 35.0,
+      "image": "../assets/products/product17.jpg",
+      "reviews": 130,
+      "rating": 4
+    },
+    {
+      "id": 12,
+      "title": "Zincovit Syrup 200ml",
+      "description": "Multivitamin and mineral syrup for immunity.",
+      "price": 110.0,
+      "image": "../assets/products/product18.jpg",
+      "reviews": 70,
+      "rating": 4
+    },
+    {
+      "id": 16,
+      "title": "Revital H Capsules",
+      "description": "Multivitamin supplement for energy and stamina.",
+      "price": 150.0,
+      "image": "../assets/products/product22.jpg",
+      "reviews": 80,
+      "rating": 4
+    },
+    {
+      "id": 39,
+      "title": "Calcium Tablets 500mg",
+      "description": "Calcium supplement for bone health.",
+      "price": 30.0,
+      "image": "../assets/products/product45.jpg",
+      "rating": 4,
+      "reviews": 90
+    },
+    {
+      "id": 40,
+      "title": "Vitamin D3 Drops 30ml",
+      "description": "Vitamin D supplement for immunity and bone health.",
+      "price": 50.0,
+      "image": "../assets/products/product46.jpg",
+      "rating": 4.5,
+      "reviews": 130
+    }
+  ],
+  "Personal Hygiene": [
+    {
+      "id": 7,
+      "title": "Hand Sanitizer 100ml",
+      "description": "Alcohol-based sanitizer for germ protection.",
+      "price": 45.0,
+      "image": "../assets/products/product13.jpg",
+      "reviews": 90,
+      "rating": 5
+    },
+    {
+      "id": 26,
+      "title": "Dabur Red Toothpaste 100g",
+      "description": "Ayurvedic toothpaste for strong and healthy teeth.",
+      "price": 50.0,
+      "image": "../assets/products/product32.jpg",
+      "reviews": 50,
+      "rating": 4
+    },
+    {
+      "id": 41,
+      "title": "Savlon Handwash 200ml",
+      "description": "Antibacterial handwash for daily use.",
+      "price": 35.0,
+      "image" : "../assets/products/product47.jpg",
+      "rating": 5,
+      "reviews": 300
+    },
+    {
+      "id": 42,
+      "title": "Listerine Mouthwash 250ml",
+      "description": "Antiseptic mouthwash for fresh breath and oral care.",
+      "price": 65.0,
+      "image": "../assets/products/product48.jpg",
+      "rating": 4.5,
+      "reviews": 175
+    }
+  ],
+  "Herbal and Ayurvedic Remedies": [
+    {
+      "id": 14,
+      "title": "Liv 52 Syrup",
+      "description": "Ayurvedic liver tonic for liver health.",
+      "price": 120.0,
+      "image": "../assets/products/product20.jpg",
+      "reviews": 70,
+      "rating": 4
+    },
+    {
+      "id": 19,
+      "title": "Dabur Chyawanprash 500g",
+      "description": "Immunity booster with Ayurvedic ingredients.",
+      "price": 160.0,
+      "image": "../assets/products/product25.jpg",
+      "reviews": 200,
+      "rating": 5
+    },
+    {
+      "id": 20,
+      "title": "Himalaya Ashvagandha Tablets",
+      "description": "Herbal supplement for stress relief and immunity.",
+      "price": 140.0,
+      "image": "../assets/products/product26.jpg",
+      "reviews": 40,
+      "rating": 4
+    },
+    {
+      "id": 43,
+      "title": "Himalaya Brahmi Tablet",
+      "description": "Ayurvedic brain tonic for memory and focus.",
+      "price": 120.0,
+      "image" : "../assets/products/product49.jpg",
+      "rating": 4,
+      "reviews": 70
+    },
+    {
+      "id": 44,
+      "title": "Dabur Ashwagandha Churna 100g",
+      "description": "Traditional Ayurvedic powder for stamina and energy.",
+      "price": 150.0,
+      "image": "../assets/products/product50.jpg",
+      "rating": 4.5,
+      "reviews": 60
+    }
+  ],
+  "Energy and Rehydration Drinks": [
+    {
+      "id": 6,
+      "title": "Glucon-D 125g",
+      "description": "Instant energy powder enriched with glucose.",
+      "price": 35.0,
+      "image": "../assets/products/product12.jpg",
+      "reviews": 200,
+      "rating": 5
+    },
+    {
+      "id": 17,
+      "title": "Gatorade Powder Sachet",
+      "description": "Energy drink powder for hydration and stamina.",
+      "price": 20.0,
+      "image": "../assets/products/product23.jpg",
+      "reviews": 100,
+      "rating": 5
+    },
+    {
+      "id": 45,
+      "title": "ORS Electro Powder 250g",
+      "description": "Rehydration powder for energy boost and electrolyte balance.",
+      "price": 40.0,
+      "image": "../assets/products/product51.jpg",
+      "rating": 5,
+      "reviews": 150
+    },
+    {
+      "id": 46,
+      "title": "Coco Water Powder Sachet",
+      "description": "Coconut water powder for instant natural hydration.",
+      "price": 25.0,
+      "image": "../assets/products/product52.jpg",
+      "rating": 4.5,
+      "reviews": 180
+    }
+  ]
+}

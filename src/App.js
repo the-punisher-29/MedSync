@@ -17,6 +17,7 @@ import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import ProfilePage from './screens/profilepage';
 import AdminPage from './screens/adminpage'; // Import AdminPage
+import OrdersPage from './screens/OrdersPage';
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
             <PrivateRoute exact path="/orders"><OrderScreen /></PrivateRoute>
             <PrivateRoute exact path="/profile"><ProfilePage /></PrivateRoute>
             <PrivateRoute exact path="/admin"><AdminPage /></PrivateRoute> {/* Admin route */}
+            <PublicRoute eaxct path="/userOrders"> <OrdersPage /> </PublicRoute>
             <Route path="*"><ErrorScreen /></Route>
           </Switch>
           <Footer />

@@ -14,6 +14,7 @@ const Navbar = () => {
         { id: 1, text: 'Home', to: '/' },
         { id: 2, text: 'Products', to: '/products' },
         { id: 3, text: 'Contact', to: '/contact' },
+        { id: 4, text: 'Orders', to: '/userOrders' }
     ]
 
     //handle click 

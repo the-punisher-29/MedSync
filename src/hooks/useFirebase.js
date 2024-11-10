@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import swal from 'sweetalert';
 import initializeAuthentication from '../config/firebase';
 import { db, collection, getDocs } from '../config/firebase'; 
+import { doc, setDoc } from "firebase/firestore"; 
 //initialize firebase  authentication
 initializeAuthentication()
 
@@ -29,37 +30,55 @@ const useFirebase = () => {
     
 
 
-    //sign up functionality
-    const signUpUser = async (email, password, name) => {
-        setIsLoading(true);
-        try {
-            const res = await createUserWithEmailAndPassword(auth, email, password);
-            
-            // Update the user profile with only the display name
-            await updateProfile(auth.currentUser, {
-                displayName: name,
-            });
-            
-            // Directly log the user in after signup
-            setUser(res.user);
-            
-            // Show success message
-            swal("Good job!", "Account has been created!", "success");
-    
-            // Redirect to home
-            history.push('/');
+const signUpUser = async (email, password, name) => {
+    setIsLoading(true);
+    try {
+        const res = await createUserWithEmailAndPassword(auth, email, password);
+        
+        // Update the user profile with the display name
+        await updateProfile(auth.currentUser, {
+            displayName: name,
+        });
+        
+        // Add additional user details to Firestore
+        const userProfileData = {
+            age: '',  // Empty string for age
+            bloodGroup: '',  // Empty string for bloodGroup
+            email: email,  // Set to the email the user just entered
+            medicalBio: '',  // Empty string for medicalBio
+            name: '',  // Set to the user's display name
+            phone: '',  // Empty string for phone
+            photoURL: '',  // Empty string for photoURL
+            rating: '',  // Empty string for rating
+            rollOrEmpId: '',  // Empty string for roll or emp id
+            serviceReview: '',  // Empty string for serviceReview
+            orders: []  // Empty array for orders
+        };
 
-            // Reload the home page
-            window.location.reload();
+        // Create a document for the user in the 'user_profile' collection
+        const userProfileRef = doc(db, 'user_profile', res.user.uid);  // Using the UID as the document ID
+        await setDoc(userProfileRef, userProfileData);  // Set the data
 
+        // Directly log the user in after signup
+        setUser(res.user);
+        
+        // Show success message
+        swal("Good job!", "Account has been created!", "success");
 
-            window.scrollTo(0, 100);
-        } catch (err) {
-            swal("Something went wrong!", `${err.message}`, "error");
-        } finally {
-            setIsLoading(false);
-        }
-    };
+        // Redirect to home
+        history.push('/');
+
+        // Reload the home page
+        window.location.reload();
+
+        window.scrollTo(0, 100);
+    } catch (err) {
+        swal("Something went wrong!", `${err.message}`, "error");
+    } finally {
+        setIsLoading(false);
+    }
+};
+
     
 
     //sign in functionality

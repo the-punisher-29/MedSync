@@ -2,79 +2,95 @@ import React, { useState, useEffect } from 'react';
 import Bounce from 'react-reveal/Bounce';
 import OrderCard from '../components/Order/OrderCard';
 import useOrder from '../hooks/useOrder';
-import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage"; 
-import { addDoc, collection } from "firebase/firestore"; 
-
-
-//@arman in this update upload ss method so that ss gets saved in storage with phone number as name and also add place order functionality to save order in firestore db anmd same should be visible in admin panel
+import { addDoc, collection, doc, updateDoc, arrayUnion, setDoc } from 'firebase/firestore';
+import  useAuth from '../hooks/useAuth';
+import { getFirestore } from 'firebase/firestore';
+import { useHistory } from 'react-router-dom'; // Import for redirection
+import swal from 'sweetalert'; 
 
 const OrderScreen = () => {
     const { orders } = useOrder();
     const [deliveryTiming, setDeliveryTiming] = useState('one-time');
-    const [deliveryTimeRange, setDeliveryTimeRange] = useState('');
-    const [recurringOption, setRecurringOption] = useState('one-time');
+    const [deliveryTimeRange, setDeliveryTimeRange] = useState('None');
+    const [recurringOption, setRecurringOption] = useState('None');
     const [paymentType, setPaymentType] = useState('cash');
-    const [screenshot, setScreenshot] = useState(null);
-    const [qrCodeUrl, setQrCodeUrl] = useState('');
     const [totalPrice, setTotalPrice] = useState(0); // State for total price
     const gstRate = 0.05; // 5% GST
+    const { user } = useAuth(); // Get the current user from AuthContext
+    const db = getFirestore();
+    const history = useHistory();
 
-    const fetchQrCode = async () => {
-        const storage = getStorage();
-        const qrRef = ref(storage, 'gs://pharma-t.appspot.com/payment qr.avif'); 
-        try {
-            const url = await getDownloadURL(qrRef);
-            setQrCodeUrl(url);
-        } catch (error) {
-            console.error("Error fetching QR code:", error);
-        }
-    };
-
+    // Calculate total price based on orders and their quantities
     useEffect(() => {
-        if (paymentType === 'upi') {
-            fetchQrCode();
-        } else {
-            setQrCodeUrl('');
-        }
-    }, [paymentType]);
-
-    useEffect(() => {
-        // Calculate total price based on orders and their quantities
         const price = orders.reduce((acc, order) => {
             return acc + (order.price * order.quantity); // Use quantity from order
         }, 0);
         setTotalPrice(price + price * gstRate); // Total price including GST
     }, [orders]);
 
-    const handleUploadScreenshot = async (file) => {
-        const storage = getStorage();
-        const storageRef = ref(storage, `screenshots/${file.name}`);
-        await uploadBytes(storageRef, file);
-        console.log("Screenshot uploaded successfully!");
-    };
-
+    // Function to handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (screenshot) {
-            await handleUploadScreenshot(screenshot);
-        }
-
-        // Store order details in Firestore
         const orderDetails = {
-            deliveryTiming,
-            deliveryTimeRange,
-            recurringOption,
-            paymentType,
-            totalPrice,
-            screenshotName: screenshot ? screenshot.name : null // Save screenshot file name if uploaded
+            user_id: user.uid,  // Get current user UID from AuthContext
+            items: orders.map(item => ({
+                product_id: item.id,
+                name: item.title,
+                quantity: item.quantity,
+                price_per_unit: item.price,
+                total_price: item.price * item.quantity
+            })),
+            total_price: totalPrice || 0,  // Make sure total_price is a valid number (default 0)
+            gst: totalPrice * gstRate || 0,  // Ensure gst is valid
+            delivery_timing: deliveryTiming || 'None',  // Set default value if empty
+            delivery_time_range: deliveryTimeRange || 'None',  // Set default value if empty
+            recurring_option: recurringOption || 'None',  // Set default value if empty
+            payment_type: paymentType || 'None',  // Set default value if empty
+            timestamp: new Date(),
+            status: 'pending'
         };
 
-        // Example Firestore save operation (replace with your collection name)
-        await addDoc(collection(/* Firestore instance */), orderDetails);
+     // Log the orderDetails to check for undefined values
+    console.log("Order Details:", orderDetails);
 
-        console.log("Order submitted successfully:", orderDetails);
+    // Check if any field is undefined and log it
+    Object.keys(orderDetails).forEach(key => {
+        if (orderDetails[key] === undefined) {
+            console.error(`Field ${key} is undefined`);
+        }
+    });
+
+    try {
+        // Generate a unique order_id (can be based on timestamp or any other unique identifier)
+        const order_id = `order_${new Date().getTime()}`;  // Generate unique order_id (timestamp-based)
+
+        // Create a reference to the document with the order_id
+        const orderRef = doc(db, 'orders', order_id);  // Use the order_id as the document ID
+
+        // Add the order details to that document
+        await setDoc(orderRef, orderDetails);
+
+        // Add the order_id to the user's orders array in the users collection
+        const userRef = doc(db, 'user_profile', user.uid);
+        await updateDoc(userRef, {
+            orders: arrayUnion(order_id)  // Add order_id to the orders array
+        });
+
+        console.log("Order placed successfully with order_id:", order_id);
+
+        // Show success message using SweetAlert
+        swal("Order Placed!", "Your order has been placed successfully!", "success")
+
+        history.push('/'); 
+
+    } catch (error) {
+        console.error("Error placing order:", error);
+    }
     };
+
+    // Check if the form is complete (i.e., "Place Order" button should be enabled)
+    const isFormValid = deliveryTiming !== 'None' && deliveryTimeRange !== 'None' && paymentType !== 'None';
 
     return (
         <section className="max-w-screen-xl py-24 mx-auto px-6">
@@ -110,6 +126,7 @@ const OrderScreen = () => {
                                     onChange={(e) => setDeliveryTiming(e.target.value)}
                                     className="mt-1 block w-full border-gray-300 rounded-md"
                                 >
+                                    <option value="None">Select Timing</option>
                                     <option value="one-time">One Time</option>
                                     <option value="recurring">Recurring</option>
                                 </select>
@@ -122,7 +139,7 @@ const OrderScreen = () => {
                                     onChange={(e) => setDeliveryTimeRange(e.target.value)}
                                     className="mt-1 block w-full border-gray-300 rounded-md"
                                 >
-                                    <option value="">Select Time Range</option>
+                                    <option value="None">Select Time Range</option>
                                     <option value="morning">Morning</option>
                                     <option value="afternoon">Afternoon</option>
                                     <option value="evening">Evening</option>
@@ -137,7 +154,7 @@ const OrderScreen = () => {
                                         onChange={(e) => setRecurringOption(e.target.value)}
                                         className="mt-1 block w-full border-gray-300 rounded-md"
                                     >
-                                        <option value="one-time">One Time</option>
+                                        <option value="None">Select Option</option>
                                         <option value="monthly">Every Month</option>
                                         <option value="bi-monthly">Every Two Months</option>
                                     </select>
@@ -151,37 +168,20 @@ const OrderScreen = () => {
                                     onChange={(e) => setPaymentType(e.target.value)}
                                     className="mt-1 block w-full border-gray-300 rounded-md"
                                 >
+                                    <option value="None">Select Payment</option>
                                     <option value="cash">Cash</option>
                                     <option value="upi">UPI</option>
                                 </select>
                             </div>
 
-                            {paymentType === 'upi' && (
-                                <>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700">Upload Screenshot</label>
-                                        <input 
-                                            type="file"
-                                            onChange={(e) => setScreenshot(e.target.files[0])}
-                                            className="mt-1 block w-full border-gray-300 rounded-md"
-                                        />
-                                    </div>
-                                    {qrCodeUrl && (
-                                        <div className="mt-4">
-                                            <h3 className="text-sm font-medium text-gray-700">Scan this QR Code for UPI Payment:</h3>
-                                            <img src={qrCodeUrl} alt="QR Code" className="mt-2 w-52 h-52" />
-                                        </div>
-                                    )}
-                                </>
-                            )}
-                            
                             <div className="mt-4">
                                 <h3 className="text-lg font-semibold">Total Price (including GST): ₹{totalPrice.toFixed(2)}</h3>
                             </div>
 
                             <button 
                                 type="submit"
-                                className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md"
+                                className={`mt-4 bg-blue-600 text-white py-2 px-4 rounded-md ${!isFormValid ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                disabled={!isFormValid}  // Disable button if form is not valid
                             >
                                 Place Order
                             </button>

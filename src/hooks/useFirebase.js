@@ -13,19 +13,20 @@ const useFirebase = () => {
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
 
-    //on State Change 
     useEffect(() => {
         const unsubscribed = onAuthStateChanged(auth, user => {
             if (user) {
                 setUser(user)
-            }else{
+                console.log("User signed in:", user.email);
+            } else {
                 setUser({})
+                console.log("No user signed in");
             }
             setIsLoading(false);
         })
         return () => unsubscribed;
-
     }, [auth])
+    
 
 
     //sign up functionality
@@ -47,6 +48,11 @@ const useFirebase = () => {
     
             // Redirect to home
             history.push('/');
+
+            // Reload the home page
+            window.location.reload();
+
+
             window.scrollTo(0, 100);
         } catch (err) {
             swal("Something went wrong!", `${err.message}`, "error");
@@ -64,6 +70,8 @@ const useFirebase = () => {
                 setUser(res.user);
                 swal("Sign in Successful!", "Welcome back !", "info")
                 history.push('/');
+                // Reload the home page
+                window.location.reload();
                                     window.scrollTo(0, 100);
 
             })

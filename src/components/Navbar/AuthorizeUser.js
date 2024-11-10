@@ -10,17 +10,32 @@ const AuthorizeUser = () => {
     const history = useHistory();
     const { orders } = useOrder();
 
+    // Function to extract username from email by slicing before '@'
+    const getUsernameFromEmail = (email) => {
+        if (email) {
+            return email.split('@')[0]; // Slice the part before '@'
+        }
+        return '';
+    };
+
     return (
         <>
-            {user?.displayName ? (
+            {/* Check if the user is authenticated */}
+            {user?.displayName || user?.email ? (
                 <div className="flex items-center justify-end space-x-4">
+                    {/* Log the displayName or email */}
+                    {console.log("User displayName:", user.displayName)}
+                    {console.log("User email:", user.email)}
+
                     <div className="relative flex cursor-pointer" onClick={() => history.push('/orders')}>
                         <span className="bg-blue-600 w-6 h-6 rounded-full flex items-center justify-center text-white absolute -right-2 -top-2">{orders.length}</span>
                         <BsCart2 className="cursor-pointer w-6 h-6 text-gray-700" />
                     </div>
+
+                    {/* Show photo and username or email */}
                     <img
                         src={user.photoURL || "https://cdn-icons-png.flaticon.com/512/236/236832.png"}
-                        alt={user.displayName}
+                        alt={user.displayName || getUsernameFromEmail(user.email)}  // Use sliced email as alt text if no displayName
                         className="w-10 h-10 rounded-full cursor-pointer"
                         onClick={() => history.push('/profile')}
                     />
@@ -28,12 +43,15 @@ const AuthorizeUser = () => {
                         className="text-gray-700 cursor-pointer"
                         onClick={() => history.push('/profile')}
                     >
-                        {user.displayName}
+                        {user.displayName || getUsernameFromEmail(user.email)}  {/* Display displayName or email before '@' */}
                     </p>
                     <FiLogOut className="cursor-pointer w-6 h-6 text-gray-700" onClick={signOutUser} />
                 </div>
             ) : (
                 <div className="flex items-center justify-end space-x-6">
+                    {/* Log if no user is signed in */}
+                    {console.log("No username or email found for user")}
+                    {console.log("User not logged in")}
                     <button className="poppins" onClick={() => history.push('/signin')}>Sign In</button>
                     <button className="btn-primary px-6 py-3 rounded-full" onClick={() => history.push('/signup')}>Sign Up</button>
                 </div>

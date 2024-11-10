@@ -24,7 +24,17 @@ const useFetch = (collectionName) => {
                     documents = jsonData;
                 }
 
+                else if(collectionName === 'reviews'){
+                    const querySnapshot = await getDocs(collection(db, collectionName));
+                    documents = querySnapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }));
+                }
+
                 setData(documents);
+
+                console.log("Data fetched :- ",documents);
             } catch (error) {
                 console.error("Error fetching data: ", error);
             }

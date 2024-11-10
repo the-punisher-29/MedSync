@@ -75,22 +75,23 @@ const OrdersPage = () => {
                 <thead>
                     <tr>
                         <th className="px-4 py-2 border">Order ID</th>
-                        <th className="px-4 py-2 border">Timestamp</th>
-                        <th className="px-4 py-2 border">Total Bill</th>
+                        <th className="px-4 py-2 border">Date and Time</th>
+                        <th className="px-4 py-2 border">Bill</th>
                     </tr>
                 </thead>
                 <tbody>
                     {orders.map(order => (
                         <tr key={order.id}>
-                            <td className="px-4 py-2 border">{order.id}</td>
-                            <td className="px-4 py-2 border">{formatTimestamp(order.timestamp)}</td>
                             <td className="px-4 py-2 border">
                                 <button 
                                     onClick={() => setSelectedOrder(order)} 
                                     className="text-blue-500 underline">
-                                    ${order.total_price.toFixed(2)}
+                                    {order.id}
                                 </button>
                             </td>
+                            
+                            <td className="px-4 py-2 border">{formatTimestamp(order.timestamp)}</td>
+                            <td className="px-4 py-2 border">Rs. {order.total_price.toFixed(2)}</td>
                         </tr>
                     ))}
                 </tbody>

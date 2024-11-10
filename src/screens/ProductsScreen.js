@@ -76,6 +76,7 @@ import Bounce from 'react-reveal/Bounce';
 import Heading from '../components/Heading';
 import Product from '../components/products/Product';
 import useFetch from '../hooks/useFetch';
+import Navbar from '../components/Navbar/Navbar'
 
 const ProductsScreen = () => {
     const [data, setData] = useState([]);
@@ -124,6 +125,8 @@ const ProductsScreen = () => {
     }
 
     return (
+        <>
+        <Navbar />
         <section className="max-w-screen-xl py-24 mx-auto px-6">
             {/* Heading */}
             <Heading title="Products" />
@@ -157,6 +160,7 @@ const ProductsScreen = () => {
                 </div>
             ))}
         </section>
+        </>
     );
 };
 

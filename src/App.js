@@ -24,7 +24,7 @@ const App = () => {
     <BrowserRouter>
       <AuthProvider>  {/* Wrap the app with AuthProvider */}
         <OrderProvider>
-          <Navbar />
+          
           <Switch>
             <Route exact path="/"><HomeScreen /></Route>
             <Route exact path="/contact"><ContactScreen /></Route>

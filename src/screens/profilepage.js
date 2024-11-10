@@ -4,6 +4,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 import { getAuth, updateProfile } from 'firebase/auth';
 import useAuth from '../hooks/useAuth';
+import Navbar from '../components/Navbar/Navbar';
 
 const ProfilePage = () => {
     const { user, setUser } = useAuth();
@@ -101,6 +102,8 @@ const ProfilePage = () => {
     };
 
     return (
+        <>
+        <Navbar />
         <div className="profile-page container mx-auto p-4 mt-20">
             <header className="flex justify-between items-start mb-6">
                 <h1 className="text-3xl font-bold">Profile</h1>
@@ -218,6 +221,7 @@ const ProfilePage = () => {
                 </div>
             </form>
         </div>
+        </>
     );
 };
 

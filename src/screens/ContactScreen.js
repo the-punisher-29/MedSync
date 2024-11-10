@@ -1,12 +1,15 @@
 import React from 'react';
 import Bounce from 'react-reveal/Bounce';
 import ContactForm from '../components/Contact/ContactForm';
+import Navbar from '../components/Navbar/Navbar'
 
 // implement required logic to make the info from the form available in the console to store it in db and show it in admin panel under requests---@Arman do this
 
 
 const ContactScreen = () => {
     return (
+        <>
+        <Navbar />
         <section className="max-w-screen-xl py-24 mx-auto px-6  overflow-y-hidden">
             {/* heading  */}
             <Bounce left>
@@ -19,6 +22,7 @@ const ContactScreen = () => {
             {/* form  */}
                 <ContactForm />
         </section>
+        </>
     )
 }
 

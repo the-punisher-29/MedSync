@@ -7,6 +7,7 @@ import { Link, useParams } from 'react-router-dom';
 import swal from 'sweetalert';
 import useFetch from '../hooks/useFetch';
 import useOrder from '../hooks/useOrder';
+import Navbar from '../components/Navbar/Navbar'
 
 
 const ProductDetailScreen = () => {
@@ -16,6 +17,8 @@ const ProductDetailScreen = () => {
     const { handleCart, orders } = useOrder();
 
     return (
+        <>
+        <Navbar />
         <section className="max-w-screen-xl py-24 mx-auto px-6 overflow-y-hidden">
             <div className="flex flex-col justify-center items-center pt-24">
                 {data.filter(item => item.title === title).map(product => {
@@ -74,6 +77,7 @@ const ProductDetailScreen = () => {
                 })}
             </div>
         </section>
+        </>
     );
 };
 

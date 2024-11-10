@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useFirebase from "../hooks/useFirebase";
 import "./admin.css";
+import Navbar from '../components/Navbar/Navbar'
 
 const formatTimestamp = (timestamp) => {
   const date = new Date(timestamp.seconds * 1000); // Convert seconds to milliseconds
@@ -68,6 +69,8 @@ const OrdersPage = () => {
   console.log("Orders :- ", orders);
 
   return (
+    <>
+    <Navbar />
     <section className="admin-section px-8 py-12">
             <h1 className="text-3xl font-bold text-gray-700 mb-8 mt-10">Your Orders</h1>
             
@@ -133,9 +136,9 @@ const OrdersPage = () => {
 
                         {/* Bill Summary */}
                         <div className="mt-4">
-                            <p><strong>Subtotal:</strong> ${selectedOrder.total_price.toFixed(2)}</p>
-                            <p><strong>GST:</strong> ${selectedOrder.gst.toFixed(2)}</p>
-                            <p className="text-lg font-semibold"><strong>Total Bill:</strong> ${(selectedOrder.total_price + selectedOrder.gst).toFixed(2)}</p>
+                            <p><strong>Subtotal:</strong> Rs. {selectedOrder.total_price.toFixed(2)}</p>
+                            <p><strong>GST:</strong> Rs. {selectedOrder.gst.toFixed(2)}</p>
+                            <p className="text-lg font-semibold"><strong>Total Bill:</strong> Rs. {(selectedOrder.total_price + selectedOrder.gst).toFixed(2)}</p>
                         </div>
 
                         {/* Close Button */}
@@ -148,6 +151,7 @@ const OrdersPage = () => {
                 </div>
             )}
         </section>
+        </>
   );
 };
 

@@ -4,7 +4,11 @@ import { useHistory } from "react-router-dom";
 import swal from 'sweetalert';
 import initializeAuthentication from '../config/firebase';
 import { db, collection, getDocs } from '../config/firebase'; 
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc, updateDoc, serverTimestamp, getFirestore, query, orderBy, limit } from "firebase/firestore"; 
+import {initializeApp} from 'firebase/app'; // Import the firebase namespace
+
+import 'firebase/auth'; // If you're using authentication
+
 //initialize firebase  authentication
 initializeAuthentication()
 
@@ -124,30 +128,19 @@ const signUpUser = async (email, password, name) => {
     }
 // Fetch medicines
 const getMedicines = async () => {
-    const medicinesCol = collection(db, 'medicines');  // Reference to the 'medicines' collection
-    const medicinesSnapshot = await getDocs(medicinesCol);  // Get documents from the collection
-    return medicinesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));  // Map the data to a more usable format
-};
+    const medicinesRef = collection(db, "products");
+    const q = query(medicinesRef, orderBy("expiry_date", "asc"), limit(10));
+    const querySnapshot = await getDocs(q);
+    const medicines = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return medicines;
+  };
+  
 
 // Fetch orders
 const getOrders = async () => {
-    const ordersCol = collection(db, 'orders');  // Reference to the 'orders' collection
+    const ordersCol = collection(db, 'orders')  // Reference to the 'orders' collection
     const ordersSnapshot = await getDocs(ordersCol);  // Get documents from the collection
     return ordersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-};
-
-// Fetch suppliers
-const getSuppliers = async () => {
-    const suppliersCol = collection(db, 'suppliers');  // Reference to the 'suppliers' collection
-    const suppliersSnapshot = await getDocs(suppliersCol);  // Get documents from the collection
-    return suppliersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-};
-
-// Fetch sales
-const getSales = async () => {
-    const salesCol = collection(db, 'sales');  // Reference to the 'sales' collection
-    const salesSnapshot = await getDocs(salesCol);  // Get documents from the collection
-    return salesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 };
     
     // Function to fetch messages
@@ -162,6 +155,32 @@ const getSales = async () => {
             return [];
         }
     };
+    // Firestore function to update the order status
+const db = getFirestore(); // Firestore
+
+// Firestore function to update the order status
+const updateOrderStatusInFirestore = async (orderId, newStatus) => {
+  if (!orderId) {
+    console.error("Invalid orderId:", orderId); // Check for invalid orderId
+    return;
+  }
+
+  const orderRef = doc(db, 'orders', orderId); // Corrected Firestore document reference
+
+  try {
+    console.log("Updating order with ID:", orderId); // Log the orderId to verify it's being passed
+    await updateDoc(orderRef, {
+      status: newStatus,
+      timestamp: serverTimestamp(), // Optional: Update timestamp
+    });
+  } catch (error) {
+    console.error("Error updating order status in Firestore:", error);
+  }
+};
+
+
+
+  
 
     return {
         user,
@@ -172,9 +191,9 @@ const getSales = async () => {
         isLoading,
         getMedicines,
         getOrders,
-        getSuppliers,
-        getSales,
-        getMessages
+        getMessages,
+        updateOrderStatusInFirestore,
+        getMedicines
     };
 }
 

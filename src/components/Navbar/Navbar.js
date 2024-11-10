@@ -1,88 +1,162 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HiMenuAlt3 } from 'react-icons/hi';
-import Fade from 'react-reveal/Fade';
 import { NavLink } from 'react-router-dom';
 import AuthorizeUser from './AuthorizeUser';
 import AuthorizeUserMobile from './AuthorizeUserMobile';
 import NavBrand from './NavBrand';
+import useAuth from '../../hooks/useAuth';
+
+const menu = [
+    { id: 1, text: 'Home', to: '/' },
+    { id: 2, text: 'Products', to: '/products' },
+    { id: 3, text: 'Contact', to: '/contact' },
+    { id: 4, text: 'Orders', to: '/userOrders' },
+];
 
 const Navbar = () => {
-    const [changeHeader, setChangeHeader] = useState(false)
-    const [mobileNav, setMobileNav] = useState(false)
+    const [changeHeader, setChangeHeader] = useState(false);
+    const [mobileNav, setMobileNav] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isAuthorized, setIsAuthorized] = useState(true);  // Track authorization status
 
-    const menu = [
-        { id: 1, text: 'Home', to: '/' },
-        { id: 2, text: 'Products', to: '/products' },
-        { id: 3, text: 'Contact', to: '/contact' },
-        { id: 4, text: 'Orders', to: '/userOrders' }
-    ]
+    const allowedEmails = ['b22es006@iitj.ac.in', 'b22cs101@iitj.ac.in', 'b22cs014@iitj.ac.in'];
 
-    //handle click 
-    const handleClick = () => {
-        setMobileNav(!mobileNav)
-    }
-    //header change function 
-    const onChangeHeader = () => {
-        if (window.scrollY >= 50) {
-            setChangeHeader(true)
+    // Simulating authentication hook or user context
+    const { currentUser } = useAuth(); // Assuming `useAuth` provides the current user info
+
+    useEffect(() => {
+        // Check if the current user is in the allowedEmails list
+        if (currentUser && allowedEmails.includes(currentUser.email)) {
+            setIsAdmin(true);
+            setIsAuthorized(true);
         } else {
-            setChangeHeader(false)
+            setIsAdmin(false);
+            setIsAuthorized(false);
         }
-    }
+    }, [currentUser]);
 
-    //change header by scrolling
-    window.addEventListener('scroll', onChangeHeader)
+    const handleClick = () => {
+        setMobileNav(!mobileNav);
+    };
+
+    const onChangeHeader = () => {
+        setChangeHeader(window.scrollY >= 50);
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', onChangeHeader);
+        return () => {
+            window.removeEventListener('scroll', onChangeHeader);
+        };
+    }, []);
+
+    const showUnauthorizedDialog = () => {
+        alert("You are not authorized to access this section.");
+    };
 
     return (
-        <header className={changeHeader ? "bg-white fixed z-50 top-0 left-0 w-full shadow-md transition duration-500" : "bg-transparent fixed z-50 top-0 left-0 w-full transition duration-500" } style={{ backgroundColor: '#98F5F9' }}>
-            {/* desktop nav  */}
-            <nav className="flex items-center max-w-screen-xl mx-auto px-6 py-3" >
-                {/* brand  */}
+        <header 
+            className={changeHeader ? "bg-white fixed z-50 top-0 left-0 w-full shadow-md transition duration-500" : "bg-transparent fixed z-50 top-0 left-0 w-full transition duration-500"} 
+            style={{ backgroundColor: '#98F5F9' }}
+        >
+            {/* Desktop nav */}
+            <nav className="flex items-center max-w-screen-xl mx-auto px-6 py-3">
                 <div className="flex flex-grow">
                     <NavBrand />
                 </div>
-                {/* menu s */}
 
+                {/* Menu links for desktop */}
                 <div className="hidden md:flex lg:flex space-x-8">
                     <ul className="flex items-center space-x-4">
                         {menu.map(item => (
                             <li key={item.id}>
-                                <NavLink exact to={item.to} className="text-gray-600 text-lg poppins" activeClassName="border-b-4 border-blue-600 text-blue-700">{item.text}</NavLink>
+                                <NavLink 
+                                    exact="true"
+                                    to={item.to} 
+                                    className="text-gray-600 text-lg poppins" 
+                                    activeClassName="border-b-4 border-blue-600 text-blue-700"
+                                >
+                                    {item.text}
+                                </NavLink>
                             </li>
                         ))}
+                        {isAdmin ? (
+                            <li key="admin">
+                                <NavLink 
+                                    exact="true"
+                                    to="/admin" 
+                                    className="text-gray-600 text-lg poppins" 
+                                    activeClassName="border-b-4 border-blue-600 text-blue-700"
+                                >
+                                    Admin
+                                </NavLink>
+                            </li>
+                        ) : (
+                            <li key="admin">
+                                <button 
+                                    onClick={showUnauthorizedDialog} 
+                                    className="text-gray-600 text-lg poppins"
+                                >
+                                    Admin
+                                </button>
+                            </li>
+                        )}
                     </ul>
-
                     <AuthorizeUser />
                 </div>
 
-                {/* menu icon  */}
+                {/* Menu icon for mobile */}
                 <div className="block md:hidden lg:hidden">
-                    <HiMenuAlt3 className="w-10 h-10 ring-blue-300 text-gray-700 border border-gray-400 focus:ring-4 cursor-pointer rounded-lg p-2 transform transition duration-200 hover:scale-110" onClick={handleClick} />
+                    <HiMenuAlt3 
+                        className="w-10 h-10 ring-blue-300 text-gray-700 border border-gray-400 focus:ring-4 cursor-pointer rounded-lg p-2 transform transition duration-200 hover:scale-110" 
+                        onClick={handleClick} 
+                    />
                 </div>
             </nav>
 
-            {/* mobile nav  */}
+            {/* Mobile nav */}
             {mobileNav && (
-                <Fade>
-                    <nav className="bg-white shadow-lg mx-6 mt-2 p-4 rounded-lg border border-gray-300 py-4 block md:hidden lg:hidden">
-                        <ul className="mb-2">
-                            {menu.map(item => (
-                                <li key={item.id} className="mb-3">
-                                    <NavLink exact key={item.id} to={item.to} className="text-gray-600 poppins text-lg text-center py-2 px-3 w-full hover:bg-gray-200 transition duration-300 cursor-default block rounded-lg" activeClassName="border-l-4 border-blue-700 bg-gray-200">
+                <nav className="bg-white shadow-lg mx-6 mt-2 p-4 rounded-lg border border-gray-300 py-4 block md:hidden lg:hidden">
+                    <ul className="mb-2">
+                        {menu.map(item => (
+                            <li key={item.id} className="mb-3">
+                                <NavLink 
+                                    exact="true"
+                                    to={item.to} 
+                                    className="text-gray-600 poppins text-lg text-center py-2 px-3 w-full hover:bg-gray-200 transition duration-300 cursor-default block rounded-lg" 
+                                    activeClassName="border-l-4 border-blue-700 bg-gray-200"
+                                >
                                     {item.text}
-                                    </NavLink>
-                                </li>
-                            ))}
-                        </ul>
-
-                        <div>
-                            <AuthorizeUserMobile />
-                        </div>
-                    </nav>
-                </Fade>
+                                </NavLink>
+                            </li>
+                        ))}
+                        {isAdmin ? (
+                            <li key="admin" className="mb-3">
+                                <NavLink 
+                                    exact="true"
+                                    to="/admin" 
+                                    className="text-gray-600 poppins text-lg text-center py-2 px-3 w-full hover:bg-gray-200 transition duration-300 cursor-default block rounded-lg" 
+                                    activeClassName="border-l-4 border-blue-700 bg-gray-200"
+                                >
+                                    Admin
+                                </NavLink>
+                            </li>
+                        ) : (
+                            <li key="admin" className="mb-3">
+                                <button 
+                                    onClick={showUnauthorizedDialog} 
+                                    className="text-gray-600 poppins text-lg text-center py-2 px-3 w-full hover:bg-gray-200 transition duration-300 cursor-default block rounded-lg"
+                                >
+                                    Admin
+                                </button>
+                            </li>
+                        )}
+                    </ul>
+                    <AuthorizeUserMobile />
+                </nav>
             )}
         </header>
-    )
-}
+    );
+};
 
-export default Navbar
+export default Navbar;

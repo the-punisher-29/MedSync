@@ -7,6 +7,7 @@ import  useAuth from '../hooks/useAuth';
 import { getFirestore } from 'firebase/firestore';
 import { useHistory } from 'react-router-dom'; // Import for redirection
 import swal from 'sweetalert'; 
+import Navbar from '../components/Navbar/Navbar'
 
 const OrderScreen = () => {
     const { orders } = useOrder();
@@ -93,6 +94,8 @@ const OrderScreen = () => {
     const isFormValid = deliveryTiming !== 'None' && deliveryTimeRange !== 'None' && paymentType !== 'None';
 
     return (
+        <>
+        <Navbar />
         <section className="max-w-screen-xl py-24 mx-auto px-6">
             {orders.length === 0 ? (
                 <div className="h-screen">
@@ -190,6 +193,7 @@ const OrderScreen = () => {
                 </>
             )}
         </section>
+        </>
     );
 };
 

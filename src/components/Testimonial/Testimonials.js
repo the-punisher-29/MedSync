@@ -15,7 +15,7 @@ const Testimonials = () => {
     return (
         <section className="max-w-screen-xl mx-auto px-6 pb-24">
             {/* heading  */}
-            <Heading title="Testimonials" />
+            <Heading title="Reviews" />
             {/* testimonials  */}
             <Swiper
             loop={true}

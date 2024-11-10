@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
+import { getFirestore, doc, addDoc, setDoc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+
 import { getAuth, updateProfile } from 'firebase/auth';
 import useAuth from '../hooks/useAuth';
 
@@ -16,6 +17,8 @@ const ProfilePage = () => {
         rollOrEmpId: '',
         age: '',
         medicalBio: '',
+        serviceReview: '',  // Review text
+        rating: 1,  // Rating value (1 to 5 stars)
     });
     const [profilePic, setProfilePic] = useState(user.photoURL || "https://cdn-icons-png.flaticon.com/512/236/236832.png");
     const [imageFile, setImageFile] = useState(null);
@@ -66,10 +69,34 @@ const ProfilePage = () => {
                 name: user.displayName,
                 email: user.email,
                 photoURL: imageUrl,
-                ...profileData
+                ...profileData // Including the service review and rating
             });
     
-            alert("Profile updated successfully");
+            // Check if a review document exists for the user
+            const reviewsQuery = query(collection(db, "reviews"), where("username", "==", user.displayName));
+            const querySnapshot = await getDocs(reviewsQuery);
+
+            if (!querySnapshot.empty) {
+                // If a review exists, overwrite it using setDoc
+                const reviewDoc = doc(db, "reviews", querySnapshot.docs[0].id); // Get the first document (user's review)
+                await setDoc(reviewDoc, {
+                    username: user.displayName,
+                    image: imageUrl,
+                    review: profileData.serviceReview,
+                    rating: profileData.rating,
+                });
+            } else {
+                // If no review exists, create a new one
+                const reviewsRef = collection(db, "reviews");
+                await addDoc(reviewsRef, {
+                    username: user.displayName,
+                    image: imageUrl,
+                    review: profileData.serviceReview,
+                    rating: profileData.rating,
+                });
+            }
+
+            alert("Profile updated and review submitted successfully");
         }
     };
 
@@ -102,17 +129,17 @@ const ProfilePage = () => {
                         <input type="file" accept="image/*" onChange={handleImageChange} className="w-full p-2 border rounded mt-2" />
                     </div>
                     <div>
-    <label className="font-semibold">Phone Number:</label>
-    <input 
-        type="tel"
-        name="phone"
-        value={profileData.phone}
-        onChange={handleChange}
-        maxLength="10"
-        pattern="\d*" // Ensures only digits are allowed
-        className="w-full p-2 border rounded"
-    />
-</div>
+                        <label className="font-semibold">Phone Number:</label>
+                        <input 
+                            type="tel"
+                            name="phone"
+                            value={profileData.phone}
+                            onChange={handleChange}
+                            maxLength="10"
+                            pattern="\d*" // Ensures only digits are allowed
+                            className="w-full p-2 border rounded"
+                        />
+                    </div>
 
                     <div>
                         <label className="font-semibold">Blood Group:</label>
@@ -149,6 +176,32 @@ const ProfilePage = () => {
                         <textarea 
                             name="medicalBio"
                             value={profileData.medicalBio}
+                            onChange={handleChange}
+                            className="w-full p-2 border rounded"
+                        />
+                    </div>
+
+                    {/* Service Review Section */}
+                    <div>
+                        <label className="font-semibold">Service Review:</label>
+                        <textarea 
+                            name="serviceReview"
+                            value={profileData.serviceReview}
+                            onChange={handleChange}
+                            placeholder="Write your review here..."
+                            className="w-full p-2 border rounded"
+                        />
+                    </div>
+
+                    {/* Rating Section */}
+                    <div>
+                        <label className="font-semibold">Rating (1-5):</label>
+                        <input
+                            type="number"
+                            name="rating"
+                            min="1"
+                            max="5"
+                            value={profileData.rating}
                             onChange={handleChange}
                             className="w-full p-2 border rounded"
                         />

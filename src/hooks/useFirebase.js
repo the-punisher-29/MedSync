@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import swal from 'sweetalert';
 import initializeAuthentication from '../config/firebase';
-
+import { db, collection, getDocs } from '../config/firebase'; 
 //initialize firebase  authentication
 initializeAuthentication()
 
@@ -95,7 +95,46 @@ const useFirebase = () => {
         }).finally(() => setIsLoading(false));
 
     }
+// Fetch medicines
+const getMedicines = async () => {
+    const medicinesCol = collection(db, 'medicines');  // Reference to the 'medicines' collection
+    const medicinesSnapshot = await getDocs(medicinesCol);  // Get documents from the collection
+    return medicinesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));  // Map the data to a more usable format
+};
 
+// Fetch orders
+const getOrders = async () => {
+    const ordersCol = collection(db, 'orders');  // Reference to the 'orders' collection
+    const ordersSnapshot = await getDocs(ordersCol);  // Get documents from the collection
+    return ordersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+};
+
+// Fetch suppliers
+const getSuppliers = async () => {
+    const suppliersCol = collection(db, 'suppliers');  // Reference to the 'suppliers' collection
+    const suppliersSnapshot = await getDocs(suppliersCol);  // Get documents from the collection
+    return suppliersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+};
+
+// Fetch sales
+const getSales = async () => {
+    const salesCol = collection(db, 'sales');  // Reference to the 'sales' collection
+    const salesSnapshot = await getDocs(salesCol);  // Get documents from the collection
+    return salesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+};
+    
+    // Function to fetch messages
+    const getMessages = async () => {
+        try {
+            const messagesCollection = collection(db, 'messages'); // Replace 'messages' with your collection name
+            const messageSnapshot = await getDocs(messagesCollection);
+            const messages = messageSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            return messages;
+        } catch (error) {
+            console.error("Error fetching messages:", error);
+            return [];
+        }
+    };
 
     return {
         user,
@@ -103,8 +142,13 @@ const useFirebase = () => {
         signUpUser,
         signOutUser,
         signInWithGoogle,
-        isLoading
-    }
+        isLoading,
+        getMedicines,
+        getOrders,
+        getSuppliers,
+        getSales,
+        getMessages
+    };
 }
 
 export default useFirebase

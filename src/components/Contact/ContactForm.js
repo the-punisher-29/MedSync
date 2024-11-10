@@ -4,8 +4,6 @@ import TextField from '../Form/TextField';
 import { db } from '../../config/firebase'; // Adjust the path as necessary
 import { collection, addDoc, query, where, onSnapshot, Timestamp } from 'firebase/firestore';
 
-// in this make required setup that displays the response stored in response field of same collection and its data is sent from admin panel
-
 const ContactForm = () => {
     const [formData, setFormData] = useState({
         fullName: '',
@@ -23,12 +21,23 @@ const ContactForm = () => {
     const Inputs = [
         { id: 1, name: "fullName", type: "text", placeholder: "Full Name" },
         { id: 2, name: "email", type: "email", placeholder: "Email" },
-        { id: 3, name: "phoneNumber", type: "number", placeholder: "Phone Number" },
+        { id: 3, name: "phoneNumber", type: "text", placeholder: "Phone Number" },  // Changed to text for proper validation
     ];
 
-    // Handle input change
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    // Validate phone number (only 10 digits allowed)
+    const validatePhoneNumber = (phone) => {
+        const phoneRegex = /^[0-9]{10}$/;
+        return phoneRegex.test(phone);
+    };
+
+    // Validate email
+    const validateEmail = (email) => {
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        return emailRegex.test(email);
     };
 
     // Handle form submission
@@ -37,6 +46,20 @@ const ContactForm = () => {
         setIsSubmitting(true);
         setSuccessMessage('');
         setErrorMessage('');
+
+        // Validate phone number
+        if (!validatePhoneNumber(formData.phoneNumber)) {
+            setErrorMessage('Please enter a valid 10-digit phone number.');
+            setIsSubmitting(false);
+            return;
+        }
+
+        // Validate email
+        if (!validateEmail(formData.email)) {
+            setErrorMessage('Please enter a valid email address.');
+            setIsSubmitting(false);
+            return;
+        }
 
         try {
             // Add data to Firestore

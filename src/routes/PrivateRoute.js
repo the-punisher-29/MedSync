@@ -10,21 +10,28 @@ const override = css`
   border-color: red;
 `;
 
+const allowedAdminEmails = ['b22es006@iitj.ac.in', 'b22cs101@iitj.ac.in', 'b22cs014@iitj.ac.in'];
+
 const PrivateRoute = ({ children, ...rest }) => {
-    const { user, isLoading  } = useAuth();
+    const { user, isLoading } = useAuth();
+
     if (isLoading) {
         return (
             <div className="flex flex-col items-center justify-center h-screen">
                 <GridLoader color="#1d4ed8" css={override} size={25} />
-
             </div>
-        )
+        );
     }
+
+    // Check if accessing `/admin` and if user email is in allowedAdminEmails
+    const isAdminRoute = rest.path === '/admin';
+    const hasAccess = isAdminRoute ? allowedAdminEmails.includes(user?.email) : !!user;
+
     return (
         <Route
             {...rest}
             render={({ location }) =>
-                user.displayName ? (
+                hasAccess ? (
                     children
                 ) : (
                     <Redirect
@@ -36,7 +43,7 @@ const PrivateRoute = ({ children, ...rest }) => {
                 )
             }
         />
-    )
-}
+    );
+};
 
-export default PrivateRoute
+export default PrivateRoute;

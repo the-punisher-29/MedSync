@@ -90,6 +90,7 @@ const ProductsScreen = () => {
         // Ensure fetchedData is available before setting data
         if (fetchedData) {
             setData(fetchedData);
+            console.log("Data of Products :- ",fetchedData);
             setIsLoading(false);
         }
     }, [fetchedData]);

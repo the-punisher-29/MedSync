@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
 import useFirebase from "../hooks/useFirebase";
 import "./admin.css";
-import { getFirestore, collection, getDocs, doc, updateDoc } from "firebase/firestore";
-import {initializeApp} from 'firebase/app'; // Import the firebase namespace
-import {db} from '../config/firebase'
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  where,
+  query,
+} from "firebase/firestore";
+import { initializeApp } from "firebase/app"; // Import the firebase namespace
+import { db } from "../config/firebase";
 
 const formatTimestamp = (timestamp) => {
   const date = new Date(timestamp.seconds * 1000); // Convert seconds to milliseconds
@@ -35,7 +43,131 @@ const Admin = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [response, setResponse] = useState("");
   const [selectedMessage, setSelectedMessage] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [formValues, setFormValues] = useState({
+    title: "",
+    description: "",
+    price: "",
+    expiry_date: "",
+    quantity: "",
+    type: "",
+    mfg_date: "",
+  });
+  const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
 
+  const [reviews, setReviews] = useState([]);
+
+  const [selectedReview, setSelectedReview] = useState(null);
+  const [responseMessage, setResponseMessage] = useState("");
+
+  const [salesData, setSalesData] = useState([]);
+
+  const fetchMessages = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "reviews"));
+      const fetchedMessages = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setMessages(fetchedMessages);
+      console.log("Messages :- ", fetchedMessages);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    } finally {
+      setLoading(false); // Set loading to false once data is fetched
+    }
+  };
+
+  // Fetch sales data for the last 6 months
+  useEffect(() => {
+    const fetchSalesData = async () => {
+      const now = new Date();
+      const sixMonthsAgo = new Date();
+      sixMonthsAgo.setMonth(now.getMonth() - 6);
+
+      const ordersCollection = collection(db, "orders");
+      const ordersQuery = query(
+        ordersCollection,
+        where("timestamp", ">=", sixMonthsAgo)
+      );
+      const ordersSnapshot = await getDocs(ordersQuery);
+
+      // Initialize an array to hold monthly sales data
+      const monthlySales = Array(6).fill(0); // 6 months of data, initialized to 0
+
+      ordersSnapshot.forEach((doc) => {
+        const order = doc.data();
+        const orderPrice = order.price;
+        const orderTimestamp = order.timestamp.toDate();
+
+        // Get the month index (0 = January, 5 = June, etc.)
+        const monthIndex = now.getMonth() - orderTimestamp.getMonth();
+        if (monthIndex >= 0 && monthIndex < 6) {
+          monthlySales[monthIndex] += orderPrice;
+        }
+      });
+
+      // Prepare the labels for the chart
+      const months = [];
+      for (let i = 5; i >= 0; i--) {
+        const monthName = new Date(
+          now.setMonth(now.getMonth() - 1)
+        ).toLocaleString("default", { month: "short" });
+        months.push(monthName);
+      }
+
+      setSalesData({
+        labels: months.reverse(),
+        datasets: [
+          {
+            label: "Sales in the last 6 months",
+            data: monthlySales.reverse(),
+            backgroundColor: "rgba(75, 192, 192, 0.2)",
+            borderColor: "rgba(75, 192, 192, 1)",
+            borderWidth: 1,
+          },
+        ],
+      });
+    };
+
+    fetchSalesData();
+  }, []);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      const reviewsCollection = collection(db, "reviews");
+      const reviewsSnapshot = await getDocs(reviewsCollection);
+      const reviewsList = reviewsSnapshot.docs.map((doc) => doc.data());
+      setReviews(reviewsList);
+    };
+
+    fetchReviews();
+  }, []);
+
+  // Fetch reviews with responded attribute
+  useEffect(() => {
+    const fetchReviews = async () => {
+      const reviewsCollection = collection(db, "reviews");
+      const reviewsSnapshot = await getDocs(reviewsCollection);
+      const reviewsList = await Promise.all(
+        reviewsSnapshot.docs.map(async (doc) => {
+          const reviewData = doc.data();
+          const reviewId = doc.id;
+          const responded = reviewData.responded || "pending"; // If 'responded' exists, use it, else set it as 'pending'
+          return {
+            id: reviewId,
+            ...reviewData,
+            responded,
+          };
+        })
+      );
+      setReviews(reviewsList);
+    };
+
+    fetchReviews();
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -47,14 +179,19 @@ const Admin = () => {
     fetchMessages();
   }, []);
 
-  const fetchMessages = async () => {
-    const querySnapshot = await getDocs(collection(db, "customer_queries"));
-    const fetchedMessages = querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    setMessages(fetchedMessages);
-  };
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const productsCollection = collection(db, "products");
+      const productSnapshot = await getDocs(productsCollection);
+      const productList = productSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setProducts(productList);
+    };
+
+    fetchProducts();
+  }, []);
 
   // Function to open the response dialog
   const openResponseDialog = (msgId, currentResponse) => {
@@ -67,29 +204,13 @@ const Admin = () => {
     setShowDialog(false);
   };
 
-  const handleResponseSubmit = async () => {
-    if (response.trim()) {
-      try {
-        const docRef = doc(db, "customer_queries", selectedMessage);
-        await updateDoc(docRef, {
-          response: response,
-        });
-        // Re-fetch messages after response update
-        fetchMessages();
-        closeDialog();
-      } catch (error) {
-        console.error("Error updating response:", error);
-      }
-    }
-  };
-
   const fetchData = async () => {
     // Fetch all orders and sort by timestamp
     const fetchedOrders = await getOrders();
     setOrders(fetchedOrders);
 
     // Fetch other data (Medicines, Suppliers, Sales, Messages)
-    setMessages(await getMessages());
+    setMessages(await fetchMessages());
 
     const fetchedMedicines = await getMedicines();
 
@@ -125,6 +246,88 @@ const Admin = () => {
       setOrders(sortedOrders); // Update the state with sorted orders
     } catch (error) {
       console.error("Error updating order status:", error);
+    }
+  };
+
+  // Open edit dialog with product data
+  const openEditDialog = (product) => {
+    setSelectedProduct(product);
+    setFormValues({
+      title: product.title,
+      description: product.description,
+      price: product.price,
+      expiry_date: product.expiry_date,
+      quantity: product.quantity,
+      type: product.type,
+      mfg_date: product.mfg_date,
+    });
+  };
+
+  // Submit updated data to Firebase
+  const handleUpdateSubmit = async () => {
+    if (selectedProduct) {
+      const productsRef = collection(db, "products");
+      const querySnapshot = await getDocs(productsRef);
+
+      // Find the document with the matching `id` field
+      const productDoc = querySnapshot.docs.find(
+        (doc) => doc.data().id === selectedProduct.id
+      );
+
+      if (productDoc) {
+        const productRef = doc(db, "products", productDoc.id); // Get reference to the specific document
+
+        try {
+          await updateDoc(productRef, formValues);
+          console.log("Product updated successfully!");
+          setSelectedProduct(null); // Close the dialog
+          window.location.reload();
+        } catch (error) {
+          console.error("Error updating product:", error);
+        }
+      } else {
+        console.error("Product with the specified id not found.");
+      }
+    }
+  };
+
+  // Handle response button click (for either respond or update)
+  const handleResponseClick = (reviewId) => {
+    const review = reviews.find((rev) => rev.id === reviewId);
+    setSelectedReview(review); // Set selected review to open dialog for response
+    setResponseMessage(review.responded === "pending" ? "" : review.responded);
+  };
+
+  // Handle submitting the response
+  const handleResponseSubmit = async () => {
+    if (selectedReview) {
+      const reviewRef = doc(db, "reviews", selectedReview.id);
+
+      try {
+        if (responseMessage.trim() !== "") {
+          // Update response if message exists
+          await updateDoc(reviewRef, { responded: responseMessage });
+          console.log("Response updated successfully!");
+        } else {
+          // Create the 'responded' attribute if it's not present
+          await updateDoc(reviewRef, { responded: "No response given yet." });
+          console.log("No response was provided yet.");
+        }
+
+        // Close the dialog after the update
+        setSelectedReview(null);
+        setResponseMessage("");
+        // Refresh reviews list
+        setReviews((prevReviews) => {
+          return prevReviews.map((rev) =>
+            rev.id === selectedReview.id
+              ? { ...rev, responded: responseMessage }
+              : rev
+          );
+        });
+      } catch (error) {
+        console.error("Error updating response:", error);
+      }
     }
   };
 
@@ -166,6 +369,7 @@ const Admin = () => {
             "Shipped Orders",
             "Delivered Orders",
             "Messages",
+            "Products",
           ].map((tab) => (
             <button
               key={tab}
@@ -692,41 +896,286 @@ const Admin = () => {
             )}
           </section>
         )}
+
         {selectedTab === "Messages" && (
           <section>
             <h2 className="text-xl font-semibold text-gray-700 mb-4">
               Messages
             </h2>
+
+            {/* Reviews Table */}
             <table className="table-auto w-full text-left border-collapse">
               <thead>
                 <tr>
-                  <th className="px-4 py-2 border">User Email</th>
-                  <th className="px-4 py-2 border">Message</th>
-                  <th className="px-4 py-2 border">Response</th>
-                  <th className="px-4 py-2 border">Send Response</th>
+                  <th className="px-4 py-2 border">Username</th>
+                  <th className="px-4 py-2 border">Stars</th>
+                  <th className="px-4 py-2 border">Review</th>
+                  <th className="px-4 py-2 border">Responded</th>
+                  <th className="px-4 py-2 border">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {messages.map((msg) => (
-                  <tr key={msg.id}>
-                    <td className="px-4 py-2 border">{msg.email}</td>
-                    <td className="px-4 py-2 border">{msg.message}</td>
-                    <td className="px-4 py-2 border">
-                      {msg.response || "No response"}
-                    </td>
-                    <td className="px-4 py-2 border">
-                      <button
-                        className="bg-blue-500 text-white px-4 py-1 rounded"
-                        onClick={() => openResponseDialog(msg.id, msg.response)}
-                      >
-                        Send Response
-                      </button>
+                {reviews.length > 0 ? (
+                  reviews.map((review, index) => (
+                    <tr key={index}>
+                      <td className="px-4 py-2 border">{review.username}</td>
+                      <td className="px-4 py-2 border">{review.rating}</td>
+                      <td className="px-4 py-2 border">{review.review}</td>
+                      <td className="px-4 py-2 border">
+                        {review.responded === "pending"
+                          ? "Pending"
+                          : "Responded"}
+                      </td>
+                      <td className="px-4 py-2 border">
+                        <button
+                          onClick={() => handleResponseClick(review.id)}
+                          className="bg-blue-500 text-white px-4 py-2 rounded"
+                        >
+                          {review.responded === "pending"
+                            ? "Respond"
+                            : "Update Response"}
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="5" className="px-4 py-2 border text-center">
+                      No reviews found
                     </td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </section>
+        )}
+
+        {/* Dialog for responding to a review */}
+        {selectedReview && (
+          <div className="fixed inset-0 z-50 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+            <div className="bg-white p-8 rounded shadow-lg w-1/2 max-w-lg">
+              <h2 className="text-2xl font-bold mb-4">Respond to Review</h2>
+
+              <p>
+                <strong>Username:</strong> {selectedReview.username}
+              </p>
+              <p>
+                <strong>Review:</strong> {selectedReview.review}
+              </p>
+
+              {/* Textbox to edit or add response */}
+              <textarea
+                value={responseMessage}
+                onChange={(e) => setResponseMessage(e.target.value)}
+                placeholder="Write your response here"
+                className="w-full p-2 border mt-4"
+                rows="4"
+              />
+
+              <div className="mt-4 flex justify-end">
+                <button
+                  onClick={handleResponseSubmit}
+                  className="bg-blue-500 text-white px-6 py-2 rounded"
+                >
+                  Submit Response
+                </button>
+                <button
+                  onClick={() => setSelectedReview(null)}
+                  className="ml-2 bg-gray-500 text-white px-6 py-2 rounded"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {selectedTab === "Products" && (
+          <div>
+            {/* Products Table */}
+            <section>
+              <h2 className="text-xl font-semibold text-gray-700 mb-4">
+                Products
+              </h2>
+              <input
+                type="text"
+                placeholder="Search by product name"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="border px-4 py-2 mb-4"
+              />
+
+              <table className="table-auto w-full text-left border-collapse">
+                <thead>
+                  <tr>
+                    <th className="px-4 py-2 border">Title</th>
+                    <th className="px-4 py-2 border">Expiry Date</th>
+                    <th className="px-4 py-2 border">Price</th>
+                    <th className="px-4 py-2 border">Quantity</th>
+                    <th className="px-4 py-2 border">MFG Date</th>
+                    <th className="px-4 py-2 border">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {products
+                    .filter((product) =>
+                      product.title
+                        .toLowerCase()
+                        .includes(searchQuery.toLowerCase())
+                    )
+                    .map((product) => (
+                      <tr key={product.id}>
+                        <td className="px-4 py-2 border">{product.title}</td>
+                        <td className="px-4 py-2 border">
+                          {product.expiry_date}
+                        </td>
+                        <td className="px-4 py-2 border">{product.price}</td>
+                        <td className="px-4 py-2 border">{product.quantity}</td>
+                        <td className="px-4 py-2 border">{product.mfg_date}</td>
+                        <td className="px-4 py-2 border">
+                          <button
+                            onClick={() => openEditDialog(product)}
+                            className="bg-blue-500 text-white px-4 py-2 rounded"
+                          >
+                            Update
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </section>
+
+            {/* Update Product Dialog */}
+            {selectedProduct && (
+              <div className="fixed inset-0 z-50 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+                <div className="bg-white p-8 rounded shadow-lg w-1/2 max-w-lg">
+                  <h2 className="text-2xl font-bold mb-4">
+                    Update Product Details
+                  </h2>
+
+                  {/* Form Fields */}
+                  <div className="mb-4">
+                    <label className="block font-semibold mb-2">Title</label>
+                    <input
+                      type="text"
+                      value={formValues.title}
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, title: e.target.value })
+                      }
+                      className="w-full px-4 py-2 border rounded"
+                    />
+                  </div>
+
+                  <div className="mb-4">
+                    <label className="block font-semibold mb-2">
+                      Description
+                    </label>
+                    <input
+                      type="text"
+                      value={formValues.description}
+                      onChange={(e) =>
+                        setFormValues({
+                          ...formValues,
+                          description: e.target.value,
+                        })
+                      }
+                      className="w-full px-4 py-2 border rounded"
+                    />
+                  </div>
+
+                  <div className="mb-4">
+                    <label className="block font-semibold mb-2">Price</label>
+                    <input
+                      type="number"
+                      value={formValues.price}
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, price: e.target.value })
+                      }
+                      className="w-full px-4 py-2 border rounded"
+                    />
+                  </div>
+
+                  <div className="mb-4">
+                    <label className="block font-semibold mb-2">
+                      Expiry Date
+                    </label>
+                    <input
+                      type="date"
+                      value={formValues.expiry_date}
+                      onChange={(e) =>
+                        setFormValues({
+                          ...formValues,
+                          expiry_date: e.target.value,
+                        })
+                      }
+                      className="w-full px-4 py-2 border rounded"
+                    />
+                  </div>
+
+                  <div className="mb-4">
+                    <label className="block font-semibold mb-2">Quantity</label>
+                    <input
+                      type="number"
+                      value={formValues.quantity}
+                      onChange={(e) =>
+                        setFormValues({
+                          ...formValues,
+                          quantity: e.target.value,
+                        })
+                      }
+                      className="w-full px-4 py-2 border rounded"
+                    />
+                  </div>
+
+                  <div className="mb-4">
+                    <label className="block font-semibold mb-2">Type</label>
+                    <input
+                      type="text"
+                      value={formValues.type}
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, type: e.target.value })
+                      }
+                      className="w-full px-4 py-2 border rounded"
+                    />
+                  </div>
+
+                  <div className="mb-4">
+                    <label className="block font-semibold mb-2">
+                      Manufacturing Date
+                    </label>
+                    <input
+                      type="date"
+                      value={formValues.mfg_date}
+                      onChange={(e) =>
+                        setFormValues({
+                          ...formValues,
+                          mfg_date: e.target.value,
+                        })
+                      }
+                      className="w-full px-4 py-2 border rounded"
+                    />
+                  </div>
+
+                  {/* Submit Button */}
+                  <button
+                    onClick={handleUpdateSubmit}
+                    className="mt-6 bg-blue-500 text-white px-4 py-2 rounded"
+                  >
+                    Submit
+                  </button>
+
+                  {/* Close Button */}
+                  <button
+                    onClick={() => setSelectedProduct(null)}
+                    className="mt-4 bg-gray-400 text-white px-4 py-2 rounded"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         )}
       </section>
     </>

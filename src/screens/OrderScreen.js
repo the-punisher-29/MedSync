@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Bounce from 'react-reveal/Bounce';
 import OrderCard from '../components/Order/OrderCard';
 import useOrder from '../hooks/useOrder';
-import { addDoc, collection, doc, updateDoc, arrayUnion, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, updateDoc, arrayUnion, setDoc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import  useAuth from '../hooks/useAuth';
 import { getFirestore } from 'firebase/firestore';
 import { useHistory } from 'react-router-dom'; // Import for redirection
@@ -32,63 +32,74 @@ const OrderScreen = () => {
     // Function to handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         const orderDetails = {
-            user_id: user.uid,  // Get current user UID from AuthContext
+            user_id: user?.uid || 'unknown',
             items: orders.map(item => ({
-                product_id: item.id,
+                product_id: String(item.id),
                 name: item.title,
                 quantity: item.quantity,
                 price_per_unit: item.price,
                 total_price: item.price * item.quantity
             })),
-            total_price: totalPrice || 0,  // Make sure total_price is a valid number (default 0)
-            gst: totalPrice * gstRate || 0,  // Ensure gst is valid
-            delivery_timing: deliveryTiming || 'None',  // Set default value if empty
-            delivery_time_range: deliveryTimeRange || 'None',  // Set default value if empty
-            recurring_option: recurringOption || 'None',  // Set default value if empty
-            payment_type: paymentType || 'None',  // Set default value if empty
+            total_price: totalPrice || 0,
+            gst: totalPrice * gstRate || 0,
+            delivery_timing: deliveryTiming || 'None',
+            delivery_time_range: deliveryTimeRange || 'None',
+            recurring_option: recurringOption || 'None',
+            payment_type: paymentType || 'None',
             timestamp: new Date(),
             status: 'pending'
         };
-
-     // Log the orderDetails to check for undefined values
-    console.log("Order Details:", orderDetails);
-
-    // Check if any field is undefined and log it
-    Object.keys(orderDetails).forEach(key => {
-        if (orderDetails[key] === undefined) {
-            console.error(`Field ${key} is undefined`);
+    
+        console.log("Order Details:", orderDetails);
+    
+        try {
+            const order_id = `order_${new Date().getTime()}`;
+            const orderRef = doc(db, 'orders', order_id);
+        
+            for (const item of orders) {
+                // Query to find the document with the matching 'id' field
+                const productQuery = query(
+                    collection(db, 'products'),
+                    where('id', '==', item.id) // Filter documents by 'id' field matching item.id
+                );
+        
+                const productSnapshot = await getDocs(productQuery);
+        
+                if (!productSnapshot.empty) {
+                    // There should only be one document matching the `id` field
+                    const productDoc = productSnapshot.docs[0];
+                    const currentQuantity = productDoc.data().quantity;
+                    const newQuantity = currentQuantity - item.quantity;
+        
+                    // Update the quantity in the matched document
+                    await updateDoc(productDoc.ref, {
+                        quantity: newQuantity >= 0 ? newQuantity : 0
+                    });
+                } else {
+                    console.warn(`Product with ID ${item.id} does not exist.`);
+                }
+            }
+        
+            // Set order document in 'orders' collection
+            await setDoc(orderRef, orderDetails);
+        
+            // Update user's order history
+            const userRef = doc(db, 'user_profile', String(user.uid));
+            await updateDoc(userRef, {
+                orders: arrayUnion(order_id)
+            });
+        
+            swal("Order Placed!", "Your order has been placed successfully!", "success");
+            history.push('/');
+        } catch (error) {
+            console.error("Error placing order:", error);
         }
-    });
-
-    try {
-        // Generate a unique order_id (can be based on timestamp or any other unique identifier)
-        const order_id = `order_${new Date().getTime()}`;  // Generate unique order_id (timestamp-based)
-
-        // Create a reference to the document with the order_id
-        const orderRef = doc(db, 'orders', order_id);  // Use the order_id as the document ID
-
-        // Add the order details to that document
-        await setDoc(orderRef, orderDetails);
-
-        // Add the order_id to the user's orders array in the users collection
-        const userRef = doc(db, 'user_profile', user.uid);
-        await updateDoc(userRef, {
-            orders: arrayUnion(order_id)  // Add order_id to the orders array
-        });
-
-        console.log("Order placed successfully with order_id:", order_id);
-
-        // Show success message using SweetAlert
-        swal("Order Placed!", "Your order has been placed successfully!", "success")
-
-        history.push('/'); 
-
-    } catch (error) {
-        console.error("Error placing order:", error);
-    }
+        
     };
+    
+    
 
     // Check if the form is complete (i.e., "Place Order" button should be enabled)
     const isFormValid = deliveryTiming !== 'None' && deliveryTimeRange !== 'None' && paymentType !== 'None';

@@ -35,8 +35,8 @@ const App = () => {
             <PrivateRoute exact path="/products/:title"><ProductDetailScreen /></PrivateRoute>
             <PrivateRoute exact path="/orders"><OrderScreen /></PrivateRoute>
             <PrivateRoute exact path="/profile"><ProfilePage /></PrivateRoute>
-            <PrivateRoute exact path="/admin"><AdminPage /></PrivateRoute> {/* Admin route */}
-            <PublicRoute eaxct path="/userOrders"> <OrdersPage /> </PublicRoute>
+            <PrivateRoute exact path="/admin"><AdminPage /></PrivateRoute>
+            <Route exact path="/userOrders"> <OrdersPage /> </Route>
             <Route path="*"><ErrorScreen /></Route>
           </Switch>
           <Footer />

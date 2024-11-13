@@ -354,29 +354,30 @@ const Admin = () => {
         
 
         {/* Tabs for Admin Sections */}
-        <div className="flex space-x-4 mb-8">
-          {[
-            "Sales",
-            "All Orders",
-            "Pending Orders",
-            "Shipped Orders",
-            "Delivered Orders",
-            "Queries",
-            "Products",
-            "Expiring Soon",
-            "Contact"
-          ].map((tab) => (
-            <button
-              key={tab}
-              className={`px-4 py-2 rounded ${
-                selectedTab === tab ? "bg-blue-500 text-white" : "bg-gray-200"
-              }`}
-              onClick={() => setSelectedTab(tab)}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+        <div className="flex justify-center space-x-4 mb-8">
+  {[
+    "Sales",
+    "All Orders",
+    "Pending Orders",
+    "Shipped Orders",
+    "Delivered Orders",
+    "Queries",
+    "Products",
+    "Expiring Soon",
+    "Contact"
+  ].map((tab) => (
+    <button
+      key={tab}
+      className={`px-4 py-2 rounded ${
+        selectedTab === tab ? "bg-blue-500 text-white" : "bg-gray-200"
+      }`}
+      onClick={() => setSelectedTab(tab)}
+    >
+      {tab}
+    </button>
+  ))}
+</div>
+
 
         {selectedTab === "Sales" && (
           <div>

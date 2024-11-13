@@ -7,8 +7,7 @@ import { Link, useParams } from 'react-router-dom';
 import swal from 'sweetalert';
 import useFetch from '../hooks/useFetch';
 import useOrder from '../hooks/useOrder';
-import Navbar from '../components/Navbar/Navbar'
-
+import Navbar from '../components/Navbar/Navbar';
 
 const ProductDetailScreen = () => {
     const [disabled, setDisabled] = useState(false);
@@ -29,7 +28,11 @@ const ProductDetailScreen = () => {
                             {/* image */}
                             <div>
                                 <Fade left>
-                                    <img className="w-full h-full mx-auto object-cover rounded-lg" src={product.image} alt="coverimg" />
+                                    <img
+                                        className="w-full h-full mx-auto object-cover rounded-lg"
+                                        src={product.image} // Use the URL directly
+                                        alt="coverimg"
+                                    />
                                 </Fade>
                             </div>
                             {/* details */}

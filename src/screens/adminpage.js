@@ -9,9 +9,14 @@ import {
   updateDoc,
   where,
   query,
+  orderBy
 } from "firebase/firestore";
 import { initializeApp } from "firebase/app"; // Import the firebase namespace
 import { db } from "../config/firebase";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+
+import Navbar from '../components/Navbar/Navbar'
+
 
 const formatTimestamp = (timestamp) => {
   const date = new Date(timestamp.seconds * 1000); // Convert seconds to milliseconds
@@ -22,6 +27,18 @@ const formatTimestamp = (timestamp) => {
     hour: "2-digit",
     minute: "2-digit",
   });
+};
+
+// Helper function to format months
+const getLastSixMonths = () => {
+  const months = [];
+  const currentDate = new Date();
+  for (let i = 0; i < 6; i++) {
+    const month = new Date(currentDate);
+    month.setMonth(currentDate.getMonth() - i);
+    months.push(month.toLocaleString('default', { month: 'short' }));
+  }
+  return months.reverse();
 };
 
 const Admin = () => {
@@ -37,7 +54,7 @@ const Admin = () => {
   const [suppliers, setSuppliers] = useState([]);
   const [sales, setSales] = useState([]);
   const [messages, setMessages] = useState([]);
-  const [selectedTab, setSelectedTab] = useState("All Orders");
+  const [selectedTab, setSelectedTab] = useState("Sales");
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [medicines, setMedicines] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
@@ -80,56 +97,32 @@ const Admin = () => {
     }
   };
 
-  // Fetch sales data for the last 6 months
+  // Fetch the sales data from Firebase
   useEffect(() => {
     const fetchSalesData = async () => {
-      const now = new Date();
-      const sixMonthsAgo = new Date();
-      sixMonthsAgo.setMonth(now.getMonth() - 6);
+      const months = getLastSixMonths();
+      const salesPerMonth = months.map(month => ({ month, sales: 0 }));
 
-      const ordersCollection = collection(db, "orders");
-      const ordersQuery = query(
-        ordersCollection,
-        where("timestamp", ">=", sixMonthsAgo)
-      );
-      const ordersSnapshot = await getDocs(ordersQuery);
+      try {
+        const ordersRef = collection(db, "orders");
+        const q = query(ordersRef, where("timestamp", ">=", new Date(new Date().setMonth(new Date().getMonth() - 6))), orderBy("timestamp"));
+        const querySnapshot = await getDocs(q);
+        
+        querySnapshot.forEach((doc) => {
+          const orderData = doc.data();
+          const orderMonth = new Date(orderData.timestamp.seconds * 1000).toLocaleString('default', { month: 'short' });
 
-      // Initialize an array to hold monthly sales data
-      const monthlySales = Array(6).fill(0); // 6 months of data, initialized to 0
+          // Find the corresponding month in the salesPerMonth array
+          const monthIndex = salesPerMonth.findIndex(item => item.month === orderMonth);
+          if (monthIndex !== -1) {
+            salesPerMonth[monthIndex].sales += orderData.total_price;
+          }
+        });
 
-      ordersSnapshot.forEach((doc) => {
-        const order = doc.data();
-        const orderPrice = order.price;
-        const orderTimestamp = order.timestamp.toDate();
-
-        // Get the month index (0 = January, 5 = June, etc.)
-        const monthIndex = now.getMonth() - orderTimestamp.getMonth();
-        if (monthIndex >= 0 && monthIndex < 6) {
-          monthlySales[monthIndex] += orderPrice;
-        }
-      });
-
-      // Prepare the labels for the chart
-      const months = [];
-      for (let i = 5; i >= 0; i--) {
-        const monthName = new Date(
-          now.setMonth(now.getMonth() - 1)
-        ).toLocaleString("default", { month: "short" });
-        months.push(monthName);
+        setSalesData(salesPerMonth);
+      } catch (error) {
+        console.error("Error fetching sales data:", error);
       }
-
-      setSalesData({
-        labels: months.reverse(),
-        datasets: [
-          {
-            label: "Sales in the last 6 months",
-            data: monthlySales.reverse(),
-            backgroundColor: "rgba(75, 192, 192, 0.2)",
-            borderColor: "rgba(75, 192, 192, 1)",
-            borderWidth: 1,
-          },
-        ],
-      });
     };
 
     fetchSalesData();
@@ -333,43 +326,27 @@ const Admin = () => {
 
   return (
     <>
+
+    <Navbar />
+    
       <section className="admin-section px-8 py-12">
-        <h1 className="text-3xl font-bold text-gray-700 mb-8 mt-10">
+        <h1 className="text-3xl font-bold text-gray-700 mb-8 mt-10 text-center">
           Admin Dashboard
         </h1>
 
-        {/* Expiring Soon Table */}
-        <section className="mb-12">
-          <h2 className="text-xl font-semibold text-gray-700 mb-4">
-            Expiring Soon
-          </h2>
-          <table className="table-auto w-full text-left border-collapse">
-            <thead>
-              <tr>
-                <th className="px-4 py-2 border">Medicine</th>
-                <th className="px-4 py-2 border">Expiration Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {medicines.map((med) => (
-                <tr key={med.id}>
-                  <td className="px-4 py-2 border">{med.title}</td>
-                  <td className="px-4 py-2 border">{med.expiry_date}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
+        
 
         {/* Tabs for Admin Sections */}
         <div className="flex space-x-4 mb-8">
           {[
+            "Sales",
             "All Orders",
             "Pending Orders",
             "Shipped Orders",
             "Delivered Orders",
             "Messages",
             "Products",
+            "Expiring Soon"
           ].map((tab) => (
             <button
               key={tab}
@@ -382,6 +359,24 @@ const Admin = () => {
             </button>
           ))}
         </div>
+
+        {selectedTab === "Sales" && (
+          <div>
+          <h3>Sales Data of Last 6 Months</h3>
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={salesData}>
+              <CartesianGrid strokeDasharray="2 2" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip 
+              formatter={(value) => [`Rs. ${value.toFixed(2)}`, 'Sales']}
+              />
+              <Legend />
+              <Bar dataKey="sales" fill="#3c82f6" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+        )}
 
         {selectedTab === "All Orders" && (
           <section>
@@ -1176,6 +1171,29 @@ const Admin = () => {
               </div>
             )}
           </div>
+        )}
+        {selectedTab === "Expiring Soon" && (
+        <section className="mb-12">
+        <h2 className="text-xl font-semibold text-gray-700 mb-4">
+          Expiring Soon
+        </h2>
+        <table className="table-auto w-full text-left border-collapse">
+          <thead>
+            <tr>
+              <th className="px-4 py-2 border">Medicine</th>
+              <th className="px-4 py-2 border">Expiration Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {medicines.map((med) => (
+              <tr key={med.id}>
+                <td className="px-4 py-2 border">{med.title}</td>
+                <td className="px-4 py-2 border">{med.expiry_date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
         )}
       </section>
     </>

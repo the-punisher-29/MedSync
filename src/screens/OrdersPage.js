@@ -128,7 +128,7 @@ const OrdersPage = () => {
                                     <tr key={index}>
                                         <td className="px-4 py-2 border">{item.name}</td>
                                         <td className="px-4 py-2 border">{item.quantity}</td>
-                                        <td className="px-4 py-2 border">${item.total_price.toFixed(2)}</td>
+                                        <td className="px-4 py-2 border">Rs. {item.total_price.toFixed(2)}</td>
                                     </tr>
                                 ))}
                             </tbody>

@@ -1,16 +1,5 @@
 [
   {
-    "id": 1,
-    "title": "24/7 Pharmacy Help Line",
-    "description": "Need assistance with prescription medications? Our pharmacy help line is available 24 hours a day to answer your questions about medications, refills, and more. Whether you have queries about dosages or side effects, we’re here to help you navigate your pharmaceutical needs.",
-    "icon": "../assets/services/005-hot-line.png",
-    "image": "../assets/services/image/service-1.jpg",
-    "contactno": "1-800-238-6279",
-    "email": "iitpharmacy@iitj.ac.in",
-    "facebook": "https://www.facebook.com/IITJPharmacy",
-    "instagram": "https://www.instagram.com/IITJPharmacy"
-  },
-  {
     "id": 2,
     "title": "Medication Management Tools",
     "description": "Access our comprehensive formulary list of medications and clinical policies to help you make informed decisions about your prescriptions. Our e-prescribing platform allows for seamless medication ordering and tracking, ensuring you receive your medications promptly and safely.",

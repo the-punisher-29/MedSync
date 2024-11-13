@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore"; // Added getDocs import
+import { getFirestore, collection, addDoc, getDocs} from "firebase/firestore"; // Added getDocs import
 import { getAuth } from "firebase/auth";
 
 // Firebase configuration
@@ -24,5 +24,5 @@ const initializeAuthentication = () => {
 const db = getFirestore(app);
 const auth = initializeAuthentication();
 
-export { db, auth, collection, addDoc, getDocs }; // Export getDocs along with other functions
+export { db, auth, collection, addDoc, getDocs}; // Export getDocs along with other functions
 export default initializeAuthentication;

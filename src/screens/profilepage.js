@@ -13,14 +13,16 @@ const ProfilePage = () => {
     const auth = getAuth();
     
     const [profileData, setProfileData] = useState({
+        name: '',  // User fills this out
         phone: '',
         bloodGroup: '',
         rollOrEmpId: '',
         age: '',
         medicalBio: '',
-        serviceReview: '',  // Review text
-        rating: 1,  // Rating value (1 to 5 stars)
+        serviceReview: '',
+        rating: 1,
     });
+    
     const [profilePic, setProfilePic] = useState(user.photoURL || "https://cdn-icons-png.flaticon.com/512/236/236832.png");
     const [imageFile, setImageFile] = useState(null);
 
@@ -118,10 +120,18 @@ const ProfilePage = () => {
             
             <form onSubmit={handleSave} className="bg-white p-6 rounded-lg shadow-lg">
                 <div className="grid grid-cols-1 gap-4 mb-6">
-                    <div>
-                        <label className="font-semibold">Name:</label>
-                        <p>{user.displayName}</p>
-                    </div>
+                <div>
+    <label className="font-semibold">Name:</label>
+    <input
+        type="text"
+        name="name"
+        value={profileData.name}
+        onChange={handleChange}
+        className="w-full p-2 border rounded"
+        placeholder="Enter your full name"
+    />
+</div>
+
                     <div>
                         <label className="font-semibold">Email:</label>
                         <p>{user.email}</p>

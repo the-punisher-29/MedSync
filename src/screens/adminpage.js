@@ -397,133 +397,151 @@ const Admin = () => {
         </div>
         )}
 
-        {selectedTab === "All Orders" && (
-          <section>
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">
-              All Orders
-            </h2>
-            <table className="table-auto w-full text-left border-collapse">
-              <thead>
-                <tr>
-                  <th className="px-4 py-2 border">Order ID</th>
-                  <th className="px-4 py-2 border">Bill</th>
-                  <th className="px-4 py-2 border">Status</th>
+{selectedTab === "All Orders" && (
+  <section>
+    <h2 className="text-xl font-semibold text-gray-700 mb-4">
+      All Orders
+    </h2>
+    <table className="table-auto w-full text-left border-collapse">
+      <thead>
+        <tr>
+          <th className="px-4 py-2 border">Order ID</th>
+          <th className="px-4 py-2 border">Bill</th>
+          <th className="px-4 py-2 border">Status</th>
+          <th className="px-4 py-2 border">Payment Screenshot</th> {/* New Column */}
+        </tr>
+      </thead>
+      <tbody>
+        {orders.map((order) => (
+          <tr key={order.id}>
+            <td>
+              <button
+                onClick={() => setSelectedOrder(order)}
+                className="text-blue-500 underline"
+              >
+                {order.id}
+              </button>
+            </td>
+            <td className="px-4 py-2 border">
+              Rs. {order.total_price}
+            </td>
+            <td className="px-4 py-2 border">
+              <select
+                onChange={(e) =>
+                  handleOrderStatusUpdate(order.id, e.target.value)
+                }
+                defaultValue={order.status}
+                className="border p-1 rounded"
+              >
+                <option value="Pending">Pending</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Delivered">Delivered</option>
+              </select>
+            </td>
+            {/* New Column for Payment Screenshot */}
+            <td className="px-4 py-2 border">
+              {order.payment_type === "upi" && order.payment_screenshot ? (
+                <a
+                  href={order.payment_screenshot}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 underline"
+                >
+                  View Screenshot
+                </a>
+              ) : (
+                "N/A"
+              )}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    {/* Order Details Dialog */}
+    {selectedOrder && (
+      <div className="fixed inset-0 z-50 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+        <div className="bg-white p-8 rounded shadow-lg w-1/2 max-w-lg">
+          <h2 className="text-2xl font-bold mb-4">Order Details</h2>
+          <p>
+            <strong>Date and Time:</strong>{" "}
+            {formatTimestamp(selectedOrder.timestamp)}
+          </p>
+          <p>
+            <strong>Order ID:</strong> {selectedOrder.id}
+          </p>
+          <p>
+            <strong>Current Status:</strong> {selectedOrder.status}
+          </p>
+          <p>
+            <strong>Delivery Type:</strong>{" "}
+            {selectedOrder.delivery_timing}
+          </p>
+          <p>
+            <strong>Delivery Timing:</strong>{" "}
+            {selectedOrder.delivery_time_range}
+          </p>
+          <p>
+            <strong>Payment Type:</strong> {selectedOrder.payment_type}
+          </p>
+          <p>
+            <strong>Recurring Option:</strong>{" "}
+            {selectedOrder.recurring_option}
+          </p>
+
+          {/* Items Table */}
+          <h3 className="text-xl font-semibold mt-6 mb-2">
+            Items Ordered
+          </h3>
+          <table className="table-auto w-full text-left border-collapse mb-4">
+            <thead>
+              <tr>
+                <th className="px-4 py-2 border">Item Name</th>
+                <th className="px-4 py-2 border">Quantity</th>
+                <th className="px-4 py-2 border">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {selectedOrder.items.map((item, index) => (
+                <tr key={index}>
+                  <td className="px-4 py-2 border">{item.name}</td>
+                  <td className="px-4 py-2 border">{item.quantity}</td>
+                  <td className="px-4 py-2 border">
+                    Rs. {item.total_price.toFixed(2)}
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {orders.map((order) => (
-                  <tr key={order.id}>
-                    <button
-                      onClick={() => setSelectedOrder(order)}
-                      className="text-blue-500 underline"
-                    >
-                      {order.id}
-                    </button>
-                    <td className="px-4 py-2 border">
-                      Rs. {order.total_price}
-                    </td>
-                    <td className="px-4 py-2 border">
-                      <select
-                        onChange={(e) =>
-                          handleOrderStatusUpdate(order.id, e.target.value)
-                        }
-                        defaultValue={order.status}
-                        className="border p-1 rounded"
-                      >
-                        <option value="Pending">Pending</option>
-                        <option value="Shipped">Shipped</option>
-                        <option value="Delivered">Delivered</option>
-                      </select>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {/* Order Details Dialog */}
-            {selectedOrder && (
-              <div className="fixed inset-0 z-50 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-                <div className="bg-white p-8 rounded shadow-lg w-1/2 max-w-lg">
-                  <h2 className="text-2xl font-bold mb-4">Order Details</h2>
-                  <p>
-                    <strong>Date and Time:</strong>{" "}
-                    {formatTimestamp(selectedOrder.timestamp)}
-                  </p>
-                  <p>
-                    <strong>Order ID:</strong> {selectedOrder.id}
-                  </p>
-                  <p>
-                    <strong>Current Status:</strong> {selectedOrder.status}
-                  </p>
-                  <p>
-                    <strong>Delivery Type:</strong>{" "}
-                    {selectedOrder.delivery_timing}
-                  </p>
-                  <p>
-                    <strong>Delivery Timing:</strong>{" "}
-                    {selectedOrder.delivery_time_range}
-                  </p>
-                  <p>
-                    <strong>Payment Type:</strong> {selectedOrder.payment_type}
-                  </p>
-                  <p>
-                    <strong>Recurring Option:</strong>{" "}
-                    {selectedOrder.recurring_option}
-                  </p>
+              ))}
+            </tbody>
+          </table>
 
-                  {/* Items Table */}
-                  <h3 className="text-xl font-semibold mt-6 mb-2">
-                    Items Ordered
-                  </h3>
-                  <table className="table-auto w-full text-left border-collapse mb-4">
-                    <thead>
-                      <tr>
-                        <th className="px-4 py-2 border">Item Name</th>
-                        <th className="px-4 py-2 border">Quantity</th>
-                        <th className="px-4 py-2 border">Price</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {selectedOrder.items.map((item, index) => (
-                        <tr key={index}>
-                          <td className="px-4 py-2 border">{item.name}</td>
-                          <td className="px-4 py-2 border">{item.quantity}</td>
-                          <td className="px-4 py-2 border">
-                            ${item.total_price.toFixed(2)}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+          {/* Bill Summary */}
+          <div className="mt-4">
+            <p>
+              <strong>Subtotal:</strong> Rs.{" "}
+              {selectedOrder.total_price.toFixed(2)}
+            </p>
+            <p>
+              <strong>GST:</strong> Rs. {selectedOrder.gst.toFixed(2)}
+            </p>
+            <p className="text-lg font-semibold">
+              <strong>Total Bill:</strong> Rs.{" "}
+              {(selectedOrder.total_price + selectedOrder.gst).toFixed(2)}
+            </p>
+          </div>
 
-                  {/* Bill Summary */}
-                  <div className="mt-4">
-                    <p>
-                      <strong>Subtotal:</strong> Rs.{" "}
-                      {selectedOrder.total_price.toFixed(2)}
-                    </p>
-                    <p>
-                      <strong>GST:</strong> Rs. {selectedOrder.gst.toFixed(2)}
-                    </p>
-                    <p className="text-lg font-semibold">
-                      <strong>Total Bill:</strong> Rs.{" "}
-                      {(selectedOrder.total_price + selectedOrder.gst).toFixed(
-                        2
-                      )}
-                    </p>
-                  </div>
+          {/* Close Button */}
+          <button
+            onClick={() => setSelectedOrder(null)}
+            className="mt-6 bg-blue-500 text-white px-4 py-2 rounded"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    )}
+  </section>
+)}
 
-                  {/* Close Button */}
-                  <button
-                    onClick={() => setSelectedOrder(null)}
-                    className="mt-6 bg-blue-500 text-white px-4 py-2 rounded"
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            )}
-          </section>
-        )}
 
         {selectedTab === "Pending Orders" && (
           <section>
@@ -616,7 +634,7 @@ const Admin = () => {
                           <td className="px-4 py-2 border">{item.name}</td>
                           <td className="px-4 py-2 border">{item.quantity}</td>
                           <td className="px-4 py-2 border">
-                            ${item.total_price.toFixed(2)}
+                            Rs. {item.total_price.toFixed(2)}
                           </td>
                         </tr>
                       ))}
@@ -744,7 +762,7 @@ const Admin = () => {
                           <td className="px-4 py-2 border">{item.name}</td>
                           <td className="px-4 py-2 border">{item.quantity}</td>
                           <td className="px-4 py-2 border">
-                            ${item.total_price.toFixed(2)}
+                            Rs. {item.total_price.toFixed(2)}
                           </td>
                         </tr>
                       ))}
@@ -874,7 +892,7 @@ const Admin = () => {
                           <td className="px-4 py-2 border">{item.name}</td>
                           <td className="px-4 py-2 border">{item.quantity}</td>
                           <td className="px-4 py-2 border">
-                            ${item.total_price.toFixed(2)}
+                            Rs. {item.total_price.toFixed(2)}
                           </td>
                         </tr>
                       ))}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Bounce from 'react-reveal/Bounce';
 import TextField from '../Form/TextField';
 import { db } from '../../config/firebase'; // Adjust the path as necessary
-import { collection, addDoc, query, where, onSnapshot, Timestamp } from 'firebase/firestore';
+import { collection, addDoc, query, where, onSnapshot, Timestamp, doc, setDoc } from 'firebase/firestore';
 
 const ContactForm = () => {
     const [formData, setFormData] = useState({
@@ -62,8 +62,9 @@ const ContactForm = () => {
         }
 
         try {
-            // Add data to Firestore
-            const docRef = await addDoc(collection(db, 'customer_queries'), {
+            // Create a document in the "contact" collection with the email as the document ID
+            const contactRef = doc(db, 'contact', formData.email); // Use email as document ID
+            await setDoc(contactRef, {
                 ...formData,
                 response: '', // Default empty response
                 createdAt: Timestamp.now(),
@@ -81,7 +82,7 @@ const ContactForm = () => {
     // Fetch response from Firestore for the current user
     useEffect(() => {
         if (formData.email) {  // Only fetch if email is provided
-            const q = query(collection(db, 'customer_queries'), where('email', '==', formData.email));
+            const q = query(collection(db, 'contact'), where('email', '==', formData.email));
             const unsubscribe = onSnapshot(q, (snapshot) => {
                 snapshot.forEach(doc => {
                     const data = doc.data();

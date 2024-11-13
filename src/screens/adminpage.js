@@ -9,7 +9,8 @@ import {
   updateDoc,
   where,
   query,
-  orderBy
+  orderBy,
+  onSnapshot
 } from "firebase/firestore";
 import { initializeApp } from "firebase/app"; // Import the firebase namespace
 import { db } from "../config/firebase";
@@ -80,6 +81,7 @@ const Admin = () => {
   const [responseMessage, setResponseMessage] = useState("");
 
   const [salesData, setSalesData] = useState([]);
+  const [contactData, setContactData] = useState([]);
 
   const fetchMessages = async () => {
     try {
@@ -96,6 +98,21 @@ const Admin = () => {
       setLoading(false); // Set loading to false once data is fetched
     }
   };
+
+  useEffect(() => {
+    // Fetch data from Firestore's "contact" collection
+    const q = query(collection(db, 'contact'));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+        const data = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(), // Spread the document data into the contact object
+        }));
+        setContactData(data);
+    });
+
+    return () => unsubscribe(); // Clean up the listener
+}, []);
 
   // Fetch the sales data from Firebase
   useEffect(() => {
@@ -344,9 +361,10 @@ const Admin = () => {
             "Pending Orders",
             "Shipped Orders",
             "Delivered Orders",
-            "Messages",
+            "Queries",
             "Products",
-            "Expiring Soon"
+            "Expiring Soon",
+            "Contact"
           ].map((tab) => (
             <button
               key={tab}
@@ -892,7 +910,7 @@ const Admin = () => {
           </section>
         )}
 
-        {selectedTab === "Messages" && (
+        {selectedTab === "Queries" && (
           <section>
             <h2 className="text-xl font-semibold text-gray-700 mb-4">
               Messages
@@ -1194,6 +1212,42 @@ const Admin = () => {
           </tbody>
         </table>
       </section>
+        )}
+        {selectedTab === "Contact" && (
+          <div className="p-6">
+          <h2 className="text-3xl font-bold text-center text-gray-700 mb-6">Contact Messages</h2>
+          <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
+              <thead>
+                  <tr className="bg-gray-100">
+                      <th className="py-2 px-4 border-b">Full Name</th>
+                      <th className="py-2 px-4 border-b">Email</th>
+                      <th className="py-2 px-4 border-b">Phone Number</th>
+                      <th className="py-2 px-4 border-b">Message</th>
+                      <th className="py-2 px-4 border-b">Date Submitted</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {contactData.length === 0 ? (
+                      <tr>
+                          <td colSpan="5" className="text-center py-4">No contact messages available</td>
+                      </tr>
+                  ) : (
+                      contactData.map((contact) => (
+                          <tr key={contact.id}>
+                              <td className="py-2 px-4 border-b">{contact.fullName}</td>
+                              <td className="py-2 px-4 border-b">{contact.email}</td>
+                              <td className="py-2 px-4 border-b">{contact.phoneNumber}</td>
+                              <td className="py-2 px-4 border-b">{contact.message}</td>
+                              <td className="py-2 px-4 border-b">
+                                  {/* Convert the timestamp to a readable format */}
+                                  {new Date(contact.createdAt.seconds * 1000).toLocaleDateString('en-US')}
+                              </td>
+                          </tr>
+                      ))
+                  )}
+              </tbody>
+          </table>
+      </div>
         )}
       </section>
     </>

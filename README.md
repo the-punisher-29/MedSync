@@ -12,6 +12,7 @@
 5. [Why Firebase?](#why-firebase)
 6. [How Firebase Handles Product Images](#how-firebase-handles-product-images)
 7. [Summary](#summary)
+   - [Troubleshooting](#troubleshooting)
 
 ## Project Overview
 **MedSync** is a pharmacy management platform connecting patients with the IITJ PHC Pharmacy. It enables users to browse, order, and track medicines while providing admins with analytics, inventory management, and user communication tools. With Firebase as the backend, MedSync offers secure, real-time updates and efficient data handling.
@@ -77,9 +78,9 @@ To run the project locally, follow these steps:
 
 ## Tech Stack
 
-- **Frontend**: React, Tailwind CSS, React-Router for navigation, Chakra UI (Admin Panel), React Icons.
-- **Backend**: Firebase Authentication, Firestore (NoSQL), Firebase Storage for profile pictures and payment confirmations.
-- **Data Visualization**: Chart.js / React-Chart.js for visual analytics in the admin panel.
+- **Frontend**: Built with React for dynamic UIs, styled using Tailwind CSS, and navigation managed by React-Router. Chakra UI is used in the admin panel for accessible UI components, with React Icons for adding customizable icons.
+- **Backend**: Firebase Authentication is used for user management, Firestore serves as the real-time NoSQL database, and Firebase Storage handles media files like images.
+- **Data Visualization**: Data is visualized using Chart.js (with React-Chart.js integration) for graphical representation in the admin panel.
 
 ## Why Firebase?
 

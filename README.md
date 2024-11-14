@@ -69,12 +69,12 @@ To run the project locally, follow these steps:
 
 ## Why Firebase?
 
-1. **Real-Time Sync**: Firestore offers real-time updates for stock, orders, and messages.
-2. **Scalability**: Effortlessly handles growth in data and users.
-3. **Schema Flexibility**: NoSQL design allows easy adjustments to data structure without downtime.
-4. **Offline Support**: Ensures reliable access for users even with inconsistent connectivity.
-5. **Security**: Secure access control, limiting admin privileges to authorized emails.
-6. **Cost-Effective**: Pay-as-you-go model keeps the platform budget-friendly while scaling.
+1. **Real-Time Synchronization:**: Firestore's real-time data sync ensures that updates to stock, orders, and messages are immediately reflected across all devices, keeping the Medsync platform up-to-date at all times.
+2. **Scalability**:  Firebase's infrastructure is built to scale effortlessly, accommodating an increasing number of users and growing data without compromising performance.
+3. **Schema Flexibility**:As a NoSQL database, Firestore allows for rapid adjustments to the database schema, facilitating seamless updates and flexibility as Medsync evolves.
+4. **Offline Support**: : Firebase offers offline support, allowing users to access the platform and perform key actions even with inconsistent internet connectivity.
+5. **Security and Access Control**: With Firebase's built-in security rules, the app ensures that only authorized users, such as admins, have access to sensitive data, providing robust security for both users and administrators.
+6. **Cost-Effective**: The pay-as-you-go model ensures that Medsync only pays for the resources it uses, making Firebase an economical choice that scales with the project’s growth.
 
 ## Summary
 

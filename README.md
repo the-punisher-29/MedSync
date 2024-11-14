@@ -69,12 +69,18 @@ To run the project locally, follow these steps:
 
 ## Why Firebase?
 
-1. **Real-Time Synchronization:**: Firestore's real-time data sync ensures that updates to stock, orders, and messages are immediately reflected across all devices, keeping the Medsync platform up-to-date at all times.
+1. **Real-Time Synchronization:** Firestore's real-time data sync ensures that updates to stock, orders, and messages are immediately reflected across all devices, keeping the Medsync platform up-to-date at all times.
 2. **Scalability**:  Firebase's infrastructure is built to scale effortlessly, accommodating an increasing number of users and growing data without compromising performance.
 3. **Schema Flexibility**:As a NoSQL database, Firestore allows for rapid adjustments to the database schema, facilitating seamless updates and flexibility as Medsync evolves.
 4. **Offline Support**: : Firebase offers offline support, allowing users to access the platform and perform key actions even with inconsistent internet connectivity.
 5. **Security and Access Control**: With Firebase's built-in security rules, the app ensures that only authorized users, such as admins, have access to sensitive data, providing robust security for both users and administrators.
 6. **Cost-Effective**: The pay-as-you-go model ensures that Medsync only pays for the resources it uses, making Firebase an economical choice that scales with the project’s growth.
+
+## How Firebase handles product images?
+
+1. **Cloud Storage:** Firebase Cloud Storage is used to upload and store media files. This service automatically scales with the storage requirements, making it suitable for storing product images and other media assets related to the products in your database.
+2. **Storing as BLOBs:** Files like images are stored as binary data. In this case, the images (e.g., product images or service icons) are converted into a byte array (BLOB format) before being stored in Firebase Cloud Storage.
+3. **Referencing Images:** The image URLs (the path to these files in Firebase Storage) are typically stored in your Firestore database or Realtime Database as part of your product's attributes. These URLs can then be referenced in your application, allowing you to retrieve and display images dynamically.
 
 ## Summary
 

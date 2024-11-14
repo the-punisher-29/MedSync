@@ -1,5 +1,22 @@
 # MedSync
 
+## Table of Contents
+1. [Project Overview](#project-overview)
+2. [Getting Started](#getting-started)
+   - [Prerequisites](#prerequisites)
+   - [Steps to Run the Project Locally](#steps-to-run-the-project-locally)
+3. [Features](#features)
+   - [User Interface](#user-interface)
+   - [Admin Panel](#admin-panel)
+4. [Tech Stack](#tech-stack)
+5. [Why Firebase?](#why-firebase)
+6. [How Firebase Handles Product Images](#how-firebase-handles-product-images)
+7. [Summary](#summary)
+8. [Troubleshooting](#troubleshooting)
+9. [Contributing](#contributing)
+10. [License](#license)
+11. [Contact Information](#contact-information)
+
 **MedSync** is a pharmacy management platform connecting patients with the IITJ PHC Pharmacy. It enables users to browse, order, and track medicines while providing admins with analytics, inventory management, and user communication tools. With Firebase as the backend, MedSync offers secure, real-time updates and efficient data handling.
 
 ## Getting Started

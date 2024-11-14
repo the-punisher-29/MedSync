@@ -12,11 +12,8 @@
 5. [Why Firebase?](#why-firebase)
 6. [How Firebase Handles Product Images](#how-firebase-handles-product-images)
 7. [Summary](#summary)
-8. [Troubleshooting](#troubleshooting)
-9. [Contributing](#contributing)
-10. [License](#license)
-11. [Contact Information](#contact-information)
 
+## Project Overview
 **MedSync** is a pharmacy management platform connecting patients with the IITJ PHC Pharmacy. It enables users to browse, order, and track medicines while providing admins with analytics, inventory management, and user communication tools. With Firebase as the backend, MedSync offers secure, real-time updates and efficient data handling.
 
 ## Getting Started

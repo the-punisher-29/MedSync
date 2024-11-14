@@ -64,7 +64,7 @@ To run the project locally, follow these steps:
 
 ### User Interface
 1. **Medicine Ordering**: Users can browse medicines, add items to a cart, and proceed with checkout.
-2. **UPI QR Payments**: Seamless payments through UPI with QR code generation and payment screenshot upload for verification.
+2. **Payment Options**: Support for both Cash on Delivery and UPI payments. Seamless payments through UPI with QR code generation and payment screenshot upload for verification.
 3. **Order Tracking**: Users can view the status and history of their orders for easy reordering.
 4. **User Feedback**: A contact form allows direct communication with the pharmacy; users can also leave reviews in their profiles.
 5. **Profile Management**: Users can view and edit personal details, access their order history, and manage reviews.
@@ -74,7 +74,8 @@ To run the project locally, follow these steps:
 2. **Order Management**: View and update order statuses to keep users informed.
 3. **Stock Management**: Modify medicine quantities, update expiration dates, and mark medicines as available/unavailable.
 4. **User Contact Management**: Access and respond to messages from users to maintain communication.
-5. **Sales History**: Track recent sales and identify trends in medicine usage.
+5. **Review Management**: Monitor and respond to user reviews
+6. **Sales History**: Track recent sales and identify trends in medicine usage.
 
 ## Tech Stack
 
@@ -101,6 +102,15 @@ To run the project locally, follow these steps:
 
 MedSync brings efficiency to pharmacy management by offering a robust user interface and powerful backend solutions. Using Firebase, it leverages real-time data handling, secure authentication, and flexible scalability—making it ideal for a healthcare-focused platform.
 
+## Contributing
+
+We welcome contributions to MedSync! Here's how you can help:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ### Troubleshooting
 - If you encounter any issues related to package versions or dependencies, ensure that you have followed the steps carefully, especially downgrading the Node.js version to 16.
